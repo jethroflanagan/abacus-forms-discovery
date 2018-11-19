@@ -1,24 +1,37 @@
 import * as React from "react";
 import styled from 'styled-components';
+import * as colors from '../global/Colors';
 import { RadioButton } from './RadioButton';
 
 const Container = styled.div`
     display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+`;
+
+const List = styled.div`
+    display: flex;
     align-items: center;
     justify-content: flex-start;
+    flex-wrap: wrap;
     & > * {
       margin-right: 30px;
+      margin-bottom: 5px;
       &:last-child {
         margin-right: 0;
       }
     }
 `;
-
+const Label = styled.div`
+    color: ${colors.TEXT_NORMAL};
+    margin-bottom: 5px;
+    font-weight: 600;
+`;
 export class RadioButtonGroup extends React.Component {
   static defaultProps = {
     disabled: false,
     value: '',
-    label: 'hello',
+    label: '',
   }
 
   constructor(props) {
@@ -47,7 +60,10 @@ export class RadioButtonGroup extends React.Component {
     const { value } = this.state;
     return (
       <Container>
-      { options.map(label => <RadioButton label={label} checked={value===label} disabled={disabled} onClick={() => this.toggle(label)} />)}
+        { label ? <Label>{label}</Label> : null }
+        <List>
+          { options.map(label => <RadioButton label={label} checked={value===label} disabled={disabled} onClick={() => this.toggle(label)} />)}
+        </List>
       </Container>
     );
   }

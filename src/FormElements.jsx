@@ -14,6 +14,7 @@ import {
   FORCE_ERRORS,
   USE_GROUPS,
   MULTI_COLUMN,
+  settings,
 } from './settings/Settings';
 
 
@@ -24,7 +25,7 @@ export function FormElements(props) {
     <div>
       <h1>Form Elements</h1>
       <Stack>
-        <Button label={'hello' + props[STRETCH_WIDTH]} type="primary" />
+        <Button label={'hello' + settings[STRETCH_WIDTH.name]} type="primary" />
         <InputField />
         <ToggleSwitch />
         <SegmentedControl />

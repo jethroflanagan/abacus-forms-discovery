@@ -45,6 +45,7 @@ const ToggleButton = styled.div`
 const Label = styled.div`
   color: ${colors.TEXT_NORMAL};
   margin-left: 9px;
+  text-align: left;
 `;
 
 export class ToggleSwitch extends React.Component {

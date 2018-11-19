@@ -32,6 +32,7 @@ const RadioSignal = styled.div`
 const Label = styled.div`
     color: #555555;
     margin-left: 9px;
+    text-align: left;
 `;
 
 export class RadioButton extends React.Component {
