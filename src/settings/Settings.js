@@ -1,53 +1,58 @@
 // import produce from "immer";
-
+import * as _ from 'lodash';
 // layout
-export const STRETCH_WIDTH = { name: 'Stretch to fill width' };
-export const SINGLE_PAGE = { name: 'Single page' };
-export const USE_GROUPS = { name: 'Group fields' };
-export const MULTI_COLUMN = { name: 'Multiple columns' };
-export const FIELD_GAP = { name: 'Gap between fields', type: 'number' };
-export const GROUP_GAP = { name: 'Gap between groups', type: 'number' };
+export const STRETCH_WIDTH = 'Stretch to fill width';
+export const SINGLE_PAGE = 'Single page';
+export const USE_GROUPS = 'Group fields';
+export const MULTI_COLUMN = 'Multiple columns';
+export const FIELD_GAP = 'Gap between fields';
+export const GROUP_GAP = 'Gap between groups';
 
 // errors
-export const ERRORS_EXPAND = { name: 'Errors tap to expand' };
-export const ERROR_BREATHING_ROOM = { name: 'Errors have breathing room' };
-export const FORCE_ERRORS = { name: 'Show dummy errors' };
+export const ERRORS_EXPAND = 'Errors tap to expand';
+export const ERROR_BREATHING_ROOM = 'Errors have breathing room';
+export const FORCE_ERRORS = 'Show dummy errors';
 
 // progress
-export const PROGRESS_POSITION = { name: 'Progress position', options: ['Above', 'In title', 'Hidden'] };
-export const PROGRESS_TYPE = { name: 'Progress type', options: ['Progress indicator', 'Step indicator'] };
-export const PROGRESS_ORIENTATION = { name: 'Progress orientation', options: ['Vertical', 'Horizontal', 'Mixed: main steps are horizontal', 'Mixed: main steps are vertical'] };
-export const SEPARATE_PAGES_FOR_PROGRESS = { name: 'Progress bar sub items', options: ['Anchors in page', 'Separate pages'] };
+export const PROGRESS_POSITION = 'Progress position';
+export const PROGRESS_TYPE = 'Progress type';
+export const PROGRESS_ORIENTATION = 'Progress orientation';
+export const SEPARATE_PAGES_FOR_PROGRESS = 'Progress bar sub items';
 
 // flow
-export const SHOW_SUMMARY = { name: 'Show summary / confirmation page' };
-export const TYPEFORM = { name: 'Typeform mode' };
-export const HIDDEN_FIELDS = { name: 'Hidden fields', options: ['None (show as disabled)', 'Allow'] };
-export const PROGRESSIVE_DISCLOSER = { name: 'Progressive disclosure type', options: ['Radio', 'Segmented Control', 'Tabbed Radio header jam'] };
-export const INLINE_HELP = { name: 'Inline help', options: ['As helper text', 'As tooltip'] };
+export const SHOW_SUMMARY = 'Show summary / confirmation page';
+export const TYPEFORM = 'Typeform mode';
+export const HIDDEN_FIELDS = 'Hidden fields';
+export const PROGRESSIVE_DISCLOSURE = 'Progressive disclosure type';
+export const INLINE_HELP = 'Inline help';
 
+const list = (config) => ({ ...config, value: config.options[config.value] });
 
-// export const SETTINGS = {
-//   STRETCH_WIDTH: {},
-//   SINGLE_PAGE: {},
-//   USE_GROUPS: {},
-//   MULTI_COLUMN: {}, 
-//   FIELD_GAP: { type: 'number' },
-//   GROUP_GAP: { type: 'number' }, 
-//   ERRORS_EXPAND: {}, 
-//   ERROR_BREATHING_ROOM: {}, 
-//   FORCE_ERRORS: {}, 
-//   PROGRESS_POSITION: {}, 
-//   PROGRESS_TYPE: {}, 
-//   PROGRESS_ORIENTATION: {}, 
-//   SEPARATE_PAGES_FOR_PROGRESS: {}, 
-//   SHOW_SUMMARY: {}, 
-//   TYPEFORM: {}, 
-//   HIDDEN_FIELDS: {}, 
-//   PROGRESSIVE_DISCLOSER: {}, 
-//   INLINE_HELP: {}, 
-// };
+export const settings = {
+  STRETCH_WIDTH: { value: false },
+  SINGLE_PAGE: { value: true },
+  USE_GROUPS: { value: true },
+  MULTI_COLUMN: { value: false }, 
+  FIELD_GAP: { value: 10, type: 'number' },
+  GROUP_GAP: { value: 20, type: 'number' }, 
+  ERRORS_EXPAND: { value: true }, 
+  ERROR_BREATHING_ROOM: { value: true }, 
+  FORCE_ERRORS: { value: false }, 
+  PROGRESS_POSITION: list({ value: 0, options: ['Above', 'In title', 'Hidden'] }), 
+  PROGRESS_TYPE: list({ value: 0, options: ['Progress indicator', 'Step indicator'] }), 
+  PROGRESS_ORIENTATION: list({ value: 0, options: ['Vertical', 'Horizontal', 'Mixed: main steps are horizontal', 'Mixed: main steps are vertical'] }), 
+  SEPARATE_PAGES_FOR_PROGRESS: list({ value: 0, options: ['Anchors in page', 'Separate pages'] }), 
+  SHOW_SUMMARY: { value: true }, 
+  TYPEFORM: { value: false }, 
+  HIDDEN_FIELDS: list({ value: 0, options: ['None (show as disabled)', 'Allow'] }), 
+  PROGRESSIVE_DISCLOSER: list({ value: 0, options: ['Radio', 'Segmented Control', 'Tabbed Radio header jam'] }), 
+  INLINE_HELP: list({ value: 0, options: ['As helper text', 'As tooltip'] }), 
+};
 
+// Add 'key' name to settings for reference
+_.map(settings, (setting, key) => { settings[key] = { ...setting, name: key } });
+
+console.log('fix', settings)
 
 // todo
 // async input

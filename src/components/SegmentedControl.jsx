@@ -45,7 +45,7 @@ const Segment = styled.div`
 
 export class SegmentedControl extends React.Component {
   static defaultProps = {
-    segments: [
+    options: [
       'Segment 1',
       'Segfault 2',
       'Seg 3',
@@ -86,13 +86,13 @@ export class SegmentedControl extends React.Component {
   }
 
   render() {
-    const { numSegments, segments, disabled } = this.props;
+    const { numSegments, options, disabled } = this.props;
     const { active } = this.state;
 
     return (
       <Container>
         <List>
-          {segments.map((segment, i) => <Segment key={i} active={active === i} disabled={disabled} onClick={this.chooseActive(i)}>{segment}</Segment>)}
+          {options.map((segment, i) => <Segment key={i} active={active === i} disabled={disabled} onClick={this.chooseActive(i)}>{segment}</Segment>)}
         </List>
       </Container>
     );

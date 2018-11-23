@@ -32,7 +32,7 @@ import {
   SHOW_SUMMARY,
   TYPEFORM,
   HIDDEN_FIELDS,
-  PROGRESSIVE_DISCLOSER,
+  PROGRESSIVE_DISCLOSURE,
   INLINE_HELP,
 } from "../settings/Settings";
 
@@ -137,6 +137,17 @@ export class NormalForm extends React.Component {
     return fields.map(field => this.createField(field))
   }
 
+  resolveProgressiveDisclosure(preferredOptions) {
+    const { [PROGRESSIVE_DISCLOSURE.name]: progressiveDisclosure, } = this.props;
+    const field = {
+      Radio: { ...preferredOptions, field: RadioButtonGroup },
+      'Segmented Control': { ...preferredOptions, field: SegmentedControl },
+    }[progressiveDisclosure];
+    console.log('progressiveDisclosure', progressiveDisclosure)
+    console.log('FIELD', field)
+    return null;//this.createField(field);
+  }
+
   render() {
     const styles = {};
     if (this.state.language === "English (AU)") {
@@ -190,8 +201,8 @@ export class NormalForm extends React.Component {
           { field: InputField, label: 'Beneficiary reference', width: '240px' },
         ],
         [
-          { field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" },
-          { field: SegmentedControl, label: 'Send beneficiary a notice of payment by', segments: ["None", "SMS", "Email", "Fax"], value: "None" },
+          // this.resolveProgressiveDisclosure({ field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" }),
+          // this.resolveProgressiveDisclosure({ field: SegmentedControl, label: 'Send beneficiary a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" }),
         ],
       ])
     ]

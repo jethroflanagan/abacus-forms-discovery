@@ -21,7 +21,7 @@ import {
   INLINE_HELP,
   SHOW_SUMMARY,
   TYPEFORM,
-  PROGRESSIVE_DISCLOSER,
+  PROGRESSIVE_DISCLOSURE,
 } from './Settings';
 
 import { settings, updateSetting } from './Settings';
@@ -52,6 +52,7 @@ export class SettingsPanel extends React.Component {
 
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
         ...props.settings,
     };
@@ -78,25 +79,24 @@ export class SettingsPanel extends React.Component {
     );
   }
 
-  createListInput(option) {
-    const { name } = option;
+  createListInput(name) {return null
     const value = option.options[this.state[name]];
     return (
       <RadioButtonGroup label={name} options={option.options} value={value} />
     );
   }
 
-  createNumberInput(option) {
-    const { name } = option;
+  createNumberInput(name) {
     const value = this.state[name];
     return (
       <InputField label={name} value={value} onUpdateValue={value => this.onUpdateValue(name, value)} />
     );
   }
 
-  createToggle(option) {
-    const { name } = option;
+  createToggle(name) {
     const value = this.state[name];
+    console.log(name, value)
+
     return (
       <ToggleSwitch
         label={name}
@@ -137,7 +137,7 @@ export class SettingsPanel extends React.Component {
       label('Flow'),    
       toggle(SHOW_SUMMARY),
       toggle(TYPEFORM),
-      list(PROGRESSIVE_DISCLOSER),
+      list(PROGRESSIVE_DISCLOSURE),
       list(INLINE_HELP),
     ]
     return (
