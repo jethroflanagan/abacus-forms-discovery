@@ -44,7 +44,7 @@ class App extends React.Component {
             [FORCE_ERRORS.name]: false,
             [ERROR_BREATHING_ROOM.name]: true,
             [USE_GROUPS.name]: true,
-            [MULTI_COLUMN.name]: false,
+            [MULTI_COLUMN.name]: true,
             [FIELD_GAP.name]: 10,
             [GROUP_GAP.name]: 10,
             [ERRORS_EXPAND.name]: false,

@@ -9,6 +9,8 @@ import { Checkbox } from "../components/Checkbox";
 import { RadioButtonGroup } from "../components/RadioButtonGroup";
 import { SegmentedControl } from "../components/SegmentedControl";
 import { ProgressIndicator } from "../components/ProgressIndicator";
+import { GroupHeading } from "../components/GroupHeading";
+import * as _ from 'lodash';
 
 import {
   STRETCH_WIDTH,
@@ -36,8 +38,6 @@ import {
 
 // import "./styles.css";
 
-const Heading = styled.h2``;
-
 const FormContainer = styled.div`
   max-width: 580px;
   padding: 20px;
@@ -51,6 +51,13 @@ const FieldContainer = styled.div`
   }
 `;
 
+const Column = styled.div`
+  margin-right: 10px;
+  &(:last-child) {
+    margin-right: 0;
+  }
+`;
+
 export class NormalForm extends React.Component {
   constructor(props) {
     super(props);
@@ -59,7 +66,6 @@ export class NormalForm extends React.Component {
     };
   }
   onUpdateLanguage(language) {
-    console.log(language);
     this.setState({
       language
     });
@@ -86,8 +92,6 @@ export class NormalForm extends React.Component {
   createField(preferredOptions) {
     const options = this.getOptions(preferredOptions);
     const Field = preferredOptions.field;
-    console.log(options.container)
-    <FieldContainer fieldGap="10" />
     return (
       <FieldContainer {...options.container}>
         <Field {...options.field} />
@@ -110,45 +114,124 @@ export class NormalForm extends React.Component {
     // }
   }
 
+  createColumns(columns) {
+    return (<div style={{display: 'flex'}}>
+      {columns.map(fields => {
+        console.log('fields', fields)
+      return (
+        <Column>
+          {fields.map(field => this.createField(field))}
+        </Column>
+      );
+      })}
+      </div>
+    );
+  }
+
+  resolveMultiColumn(columns) {
+    const { [MULTI_COLUMN.name]: multiColumn, } = this.props;
+    if (multiColumn) {
+      return this.createColumns(columns);
+    }
+    const fields = _.flatten(columns);//sections.reduce((current, column) => current.concat(column))
+    return fields.map(field => this.createField(field))
+  }
+
   render() {
     const styles = {};
     if (this.state.language === "English (AU)") {
       styles.transform = "rotate(180deg)";
     }
 
-    const fields = [
-      // {
-      //   columns: [
-            [
-              { field: InputField, label: 'Beneficiary name', width: '300px' },
-              { field: InputField, label: 'Bank', width: '240px' },
-            ],
-            [
-              { field: InputField, label: 'Branch', width: '240px' },
-              { field: InputField, label: 'Account number', width: '240px' },
-            ]
-      //   ],
-      // },
-      { field: InputField, label: 'Beneficiary name', width: '300px' },
-      { field: InputField, label: 'Bank', width: '240px' },
-      { field: InputField, label: 'Branch', width: '240px' },
-      { field: InputField, label: 'Account number', width: '240px' },
-      { field: InputField, label: 'Account type', width: '240px' },
-      { field: InputField, label: 'Amount', width: '240px' },
-      { field: Checkbox, label: 'Agree' },
-      { field: RadioButtonGroup, label: 'Agree', options: ["Yes", "Ask later", "Never"], value: "Yes" },
-      { field: SegmentedControl, segments: ['Hello', 'Goodbye'], value: 'Hello' },
-      { field: ProgressIndicator, step: 1, totalSteps: 3 },
+    let sectionPaymentDetails = [
+      [
+        { field: InputField, label: 'Beneficiary name', width: '300px' },
+        { field: InputField, label: 'Bank', width: '240px' },
+        { field: InputField, label: 'Branch', width: '240px' },     
+      ],
+      [
+        { field: InputField, label: 'Account number', width: '240px' },
+        { field: InputField, label: 'Account type', width: '240px' },
+        { field: InputField, label: 'Amount', width: '240px' },
+      ]
     ];
+
+    let sectionNotices = [
+      [
+        { field: InputField, label: 'My reference', width: '240px' },
+        { field: InputField, label: 'Beneficiary reference', width: '240px' },
+      ],
+      [
+        { field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" },
+        { field: SegmentedControl, label: 'Send beneficiary a notice of payment by', segments: ["None", "SMS", "Email", "Fax"], value: "None" },
+      ],
+    ];
+
+    const fields = [
+      this.createField({ field: ProgressIndicator, step: 1, totalSteps: 3 }),
+      this.createField({ field: GroupHeading, label: 'Payment details' }),
+      this.resolveMultiColumn([
+        [
+          { field: InputField, label: 'Beneficiary name', width: '300px' },
+          { field: InputField, label: 'Bank', width: '240px' },
+          { field: InputField, label: 'Branch', width: '240px' },
+        ],
+        [
+          { field: InputField, label: 'Account number', width: '240px' },
+          { field: InputField, label: 'Account type', width: '240px' },
+          { field: InputField, label: 'Amount', width: '240px' },
+        ]
+      ]),
+      this.createField({ field: Checkbox, label: 'Immediate Interbank Payment ' }),
+      this.createField({ field: GroupHeading, label: 'Notice of payment details' }),
+      this.resolveMultiColumn([
+        [
+          { field: InputField, label: 'My reference', width: '240px' },
+          { field: InputField, label: 'Beneficiary reference', width: '240px' },
+        ],
+        [
+          { field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" },
+          { field: SegmentedControl, label: 'Send beneficiary a notice of payment by', segments: ["None", "SMS", "Email", "Fax"], value: "None" },
+        ],
+      ])
+    ]
+
+    // let formContent = fields.map(field => this.createField(field))
+    const formContent = fields;
 
     return (
       <FormContainer style={styles}>
         <Stack>
-          <Heading>Payment details</Heading>
-          { fields.map(field => this.createField(field)) }
+          {formContent}
         </Stack>
       </FormContainer>
     );
+
+    // const fields = [
+    //   { field: ProgressIndicator, step: 1, totalSteps: 3 },
+    //   { field: GroupHeading, label: 'Payment details' },
+    //   { field: InputField, label: 'Beneficiary name', width: '300px' },
+    //   { field: InputField, label: 'Bank', width: '240px' },
+    //   { field: InputField, label: 'Branch', width: '240px' },
+    //   { field: InputField, label: 'Account number', width: '240px' },
+    //   { field: InputField, label: 'Account type', width: '240px' },
+    //   { field: InputField, label: 'Amount', width: '240px' },
+    //   { field: Checkbox, label: 'Immediate Interbank Payment ' },
+    //   { field: GroupHeading, label: 'Notice of payment details' },
+    //   { field: InputField, label: 'My reference', width: '240px' },
+    //   { field: InputField, label: 'Beneficiary reference', width: '240px' },
+    //   { field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" },
+    //   { field: SegmentedControl, label: 'Send beneficiary a notice of payment by', segments: ["None", "SMS", "Email", "Fax"], value: "None" },
+    //   // { field: SegmentedControl, segments: ['Hello', 'Goodbye'], value: 'Hello' },
+    // ];
+
+    // return (
+    //   <FormContainer style={styles}>
+    //     <Stack>
+    //       { fields.map(field => this.createField(field)) }
+    //     </Stack>
+    //   </FormContainer>
+    // );
 
     // return (
     //   <FormContainer style={styles}>

@@ -27,6 +27,28 @@ export const PROGRESSIVE_DISCLOSER = { name: 'Progressive disclosure type', opti
 export const INLINE_HELP = { name: 'Inline help', options: ['As helper text', 'As tooltip'] };
 
 
+// export const SETTINGS = {
+//   STRETCH_WIDTH: {},
+//   SINGLE_PAGE: {},
+//   USE_GROUPS: {},
+//   MULTI_COLUMN: {}, 
+//   FIELD_GAP: { type: 'number' },
+//   GROUP_GAP: { type: 'number' }, 
+//   ERRORS_EXPAND: {}, 
+//   ERROR_BREATHING_ROOM: {}, 
+//   FORCE_ERRORS: {}, 
+//   PROGRESS_POSITION: {}, 
+//   PROGRESS_TYPE: {}, 
+//   PROGRESS_ORIENTATION: {}, 
+//   SEPARATE_PAGES_FOR_PROGRESS: {}, 
+//   SHOW_SUMMARY: {}, 
+//   TYPEFORM: {}, 
+//   HIDDEN_FIELDS: {}, 
+//   PROGRESSIVE_DISCLOSER: {}, 
+//   INLINE_HELP: {}, 
+// };
+
+
 // todo
 // async input
 // wrapping labels
