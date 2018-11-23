@@ -25,7 +25,7 @@ const Box = styled.div`
         : p.statusColor
   )};
     border-radius: 5px;
-    // width: 100%;
+    width: 100%;
     height: 40px;
     flex-direction: column;
     justify-content: center;
@@ -60,6 +60,7 @@ const Input = styled.input`
     border: none;
     background: transparent;
     line-height: 40px;
+    width: 100%;
     outline: none;
 `;
 const Placeholder = styled.div`
@@ -75,7 +76,7 @@ const Placeholder = styled.div`
 
 const HelperText = styled.div`
     color: ${p => p.statusColor};
-    font-size: 11px;
+    font-size: 14px;
 `;
 
 const Icon = styled.div`
@@ -94,10 +95,9 @@ export class InputField extends React.Component {
     placeholder: '',
     helperText: '',
     disabled: false,
-    height: 60,
-    width: 200,
     isPassword: false,
     infoText: '',
+    alwaysShowHelperText: false,
   }
 
   constructor(props) {
@@ -141,8 +141,22 @@ export class InputField extends React.Component {
   }
 
   render() {
-    const { disabled, label, helperText, status, placeholder, isPassword, infoText } = this.props;
-    const { isFocused, value } = this.state;
+    const { 
+      disabled, 
+      label, 
+      helperText, 
+      status, 
+      placeholder, 
+      isPassword, 
+      infoText,
+      width,
+
+      alwaysShowHelperText, // Errors have breathing room
+    } = this.props;
+    const { 
+      isFocused, 
+      value,
+    } = this.state;
 
     let statusColor = '#555';
     let statusIcon = null;
@@ -161,7 +175,7 @@ export class InputField extends React.Component {
         break;
     }
     return (
-      <Container>
+      <Container style={{ width }}>
         <LabelContainer>
           <Label>{label}</Label>
           {infoText ? <Icon><IconInfo /></Icon> : null }
@@ -177,10 +191,10 @@ export class InputField extends React.Component {
             onFocus={e => this.onFocus(e)}
             onBlur={e => this.onBlur(e)}></Input>
         </Box>
-        {helperText ? (
+        {helperText || alwaysShowHelperText ? (
           <HelperTextContainer>
             {statusIcon ? <StatusIcon>{statusIcon}</StatusIcon> : null}
-            <HelperText statusColor={statusColor}>{helperText}</HelperText>
+            <HelperText statusColor={statusColor}>{helperText}&nbsp;</HelperText>
           </HelperTextContainer>
         ): null}
       </Container>

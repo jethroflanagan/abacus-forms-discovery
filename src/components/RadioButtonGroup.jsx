@@ -53,6 +53,9 @@ export class RadioButtonGroup extends React.Component {
     this.setState({
       value,
     });
+    if (this.props.onUpdateValue) {
+      this.props.onUpdateValue(value);
+    }
   }
 
   render() {

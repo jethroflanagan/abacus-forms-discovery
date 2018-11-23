@@ -16,16 +16,19 @@ import {
   ERRORS_EXPAND,
   PROGRESS_POSITION,
   PROGRESS_TYPE,
+  SEPARATE_PAGES_FOR_PROGRESS,
   PROGRESS_ORIENTATION,
   INLINE_HELP,
   SHOW_SUMMARY,
   TYPEFORM,
+  PROGRESSIVE_DISCLOSER,
 } from './Settings';
 
 import { settings, updateSetting } from './Settings';
 
 const Container = styled.div`
   display: flex;
+  width: 400px;
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
@@ -50,7 +53,7 @@ export class SettingsPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...settings,
+        ...props.settings,
     };
   }
 
@@ -63,7 +66,8 @@ export class SettingsPanel extends React.Component {
     //   [name]: value,
     // }
     // this.props.onUpdateValue(name, value)
-    updateSetting(name, value)
+    console.log('value', name, value)
+    this.props.updateSetting(name, value)
   }
 
   createLabel(name) {
@@ -86,7 +90,7 @@ export class SettingsPanel extends React.Component {
     const { name } = option;
     const value = this.state[name];
     return (
-      <InputField label={name} value={value} />
+      <InputField label={name} value={value} onUpdateValue={value => this.onUpdateValue(name, value)} />
     );
   }
 
@@ -129,9 +133,11 @@ export class SettingsPanel extends React.Component {
       list(PROGRESS_POSITION),
       list(PROGRESS_TYPE),
       list(PROGRESS_ORIENTATION),
+      list(SEPARATE_PAGES_FOR_PROGRESS),
       label('Flow'),    
       toggle(SHOW_SUMMARY),
       toggle(TYPEFORM),
+      list(PROGRESSIVE_DISCLOSER),
       list(INLINE_HELP),
     ]
     return (
