@@ -50,6 +50,7 @@ export class RadioButtonGroup extends React.Component {
   }
 
   toggle(value) {
+    console.log('radio', value)
     this.setState({
       value,
     });

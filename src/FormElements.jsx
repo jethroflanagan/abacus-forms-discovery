@@ -8,15 +8,6 @@ import { RadioButtonGroup } from './components/RadioButtonGroup';
 import { SegmentedControl } from './components/SegmentedControl';
 import { ProgressIndicator } from './components/ProgressIndicator';
 
-import {
-  STRETCH_WIDTH,
-  SINGLE_PAGE,
-  FORCE_ERRORS,
-  USE_GROUPS,
-  MULTI_COLUMN,
-} from './settings/Settings';
-
-
 import "./styles.css";
 
 export function FormElements(props) {
@@ -24,7 +15,7 @@ export function FormElements(props) {
     <div>
       <h1>Form Elements</h1>
       <Stack>
-        <Button label={'hello' + props[STRETCH_WIDTH.name]} type="primary" />
+        <Button label={'hello' + props['STRETCH_WIDTH']} type="primary" />
         <InputField />
         <ToggleSwitch />
         <SegmentedControl />

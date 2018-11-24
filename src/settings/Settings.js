@@ -1,52 +1,60 @@
 // import produce from "immer";
 import * as _ from 'lodash';
 // layout
-export const STRETCH_WIDTH = 'Stretch to fill width';
-export const SINGLE_PAGE = 'Single page';
-export const USE_GROUPS = 'Group fields';
-export const MULTI_COLUMN = 'Multiple columns';
-export const FIELD_GAP = 'Gap between fields';
-export const GROUP_GAP = 'Gap between groups';
+// export const STRETCH_WIDTH = 'STRETCH_WIDTH';
+// export const SINGLE_PAGE = 'SINGLE_PAGE';
+// export const USE_GROUPS = 'USE_GROUPS';
+// export const MULTI_COLUMN = 'MULTI_COLUMN';
+// export const FIELD_GAP = 'FIELD_GAP';
+// export const GROUP_GAP = 'GROUP_GAP';
 
-// errors
-export const ERRORS_EXPAND = 'Errors tap to expand';
-export const ERROR_BREATHING_ROOM = 'Errors have breathing room';
-export const FORCE_ERRORS = 'Show dummy errors';
+// // errors
+// export const ERRORS_EXPAND = 'ERRORS_EXPAND';
+// export const ERROR_BREATHING_ROOM = 'ERROR_BREATHING_ROOM';
+// export const FORCE_ERRORS = 'FORCE_ERRORS';
 
-// progress
-export const PROGRESS_POSITION = 'Progress position';
-export const PROGRESS_TYPE = 'Progress type';
-export const PROGRESS_ORIENTATION = 'Progress orientation';
-export const SEPARATE_PAGES_FOR_PROGRESS = 'Progress bar sub items';
+// // progress
+// export const PROGRESS_POSITION = 'PROGRESS_POSITION';
+// export const PROGRESS_TYPE = 'PROGRESS_TYPE';
+// export const PROGRESS_ORIENTATION = 'PROGRESS_ORIENTATION';
+// export const SEPARATE_PAGES_FOR_PROGRESS = 'SEPARATE_PAGES_FOR_PROGRESS';
 
-// flow
-export const SHOW_SUMMARY = 'Show summary / confirmation page';
-export const TYPEFORM = 'Typeform mode';
-export const HIDDEN_FIELDS = 'Hidden fields';
-export const PROGRESSIVE_DISCLOSURE = 'Progressive disclosure type';
-export const INLINE_HELP = 'Inline help';
+// // flow
+// export const SHOW_SUMMARY = 'SHOW_SUMMARY';
+// export const TYPEFORM = 'TYPEFORM';
+// export const HIDDEN_FIELDS = 'HIDDEN_FIELDS';
+// export const PROGRESSIVE_DISCLOSURE = 'PROGRESSIVE_DISCLOSURE';
+// export const INLINE_HELP = 'INLINE_HELP';
 
 const list = (config) => ({ ...config, value: config.options[config.value] });
 
 export const settings = {
-  STRETCH_WIDTH: { value: false },
-  SINGLE_PAGE: { value: true },
-  USE_GROUPS: { value: true },
-  MULTI_COLUMN: { value: false }, 
-  FIELD_GAP: { value: 10, type: 'number' },
-  GROUP_GAP: { value: 20, type: 'number' }, 
-  ERRORS_EXPAND: { value: true }, 
-  ERROR_BREATHING_ROOM: { value: true }, 
-  FORCE_ERRORS: { value: false }, 
-  PROGRESS_POSITION: list({ value: 0, options: ['Above', 'In title', 'Hidden'] }), 
-  PROGRESS_TYPE: list({ value: 0, options: ['Progress indicator', 'Step indicator'] }), 
-  PROGRESS_ORIENTATION: list({ value: 0, options: ['Vertical', 'Horizontal', 'Mixed: main steps are horizontal', 'Mixed: main steps are vertical'] }), 
-  SEPARATE_PAGES_FOR_PROGRESS: list({ value: 0, options: ['Anchors in page', 'Separate pages'] }), 
-  SHOW_SUMMARY: { value: true }, 
-  TYPEFORM: { value: false }, 
-  HIDDEN_FIELDS: list({ value: 0, options: ['None (show as disabled)', 'Allow'] }), 
-  PROGRESSIVE_DISCLOSER: list({ value: 0, options: ['Radio', 'Segmented Control', 'Tabbed Radio header jam'] }), 
-  INLINE_HELP: list({ value: 0, options: ['As helper text', 'As tooltip'] }), 
+    // layout
+  STRETCH_WIDTH: { label: 'Stretch to fill width', value: false },
+  SINGLE_PAGE: { label: 'Single page', value: true },
+  USE_GROUPS: { label: 'Group fields', value: true },
+  MULTI_COLUMN: { label: 'Multiple columns', value: false }, 
+  FIELD_GAP: { label: 'Gap between fields', value: 10, type: 'number' },
+  GROUP_GAP: { label: 'Gap between groups', value: 20, type: 'number' }, 
+  
+    // errors
+  ERRORS_EXPAND: { label: 'Errors tap to expand', value: true },
+  ERROR_BREATHING_ROOM: { label: 'Errors have breathing room', value: true }, 
+  FORCE_ERRORS: { label: 'Show dummy errors', value: false }, 
+// progress
+
+  PROGRESS_POSITION: list({ label: 'Progress position', value: 0, options: ['Above', 'In title', 'Hidden'] }), 
+  PROGRESS_TYPE: list({ label: 'Progress type', value: 0, options: ['Progress indicator', 'Step indicator'] }), 
+  PROGRESS_ORIENTATION: list({ label: 'Progress orientation', value: 0, options: ['Vertical', 'Horizontal', 'Mixed: main steps are horizontal', 'Mixed: main steps are vertical'] }), 
+  SEPARATE_PAGES_FOR_PROGRESS: list({ label: 'Progress bar sub items', value: 0, options: ['Anchors in page', 'Separate pages'] }), 
+  
+    // flow
+
+  SHOW_SUMMARY: { label: 'Show summary / confirmation page', value: true }, 
+  TYPEFORM: { label: 'Typeform mode', value: false }, 
+  HIDDEN_FIELDS: list({ label: 'Hidden fields', value: 0, options: ['None (show as disabled)', 'Allow'] }), 
+  PROGRESSIVE_DISCLOSURE: list({ label: 'Progressive disclosure type', value: 0, options: ['Radio', 'Segmented Control', 'Tabbed Radio header jam'] }), 
+  INLINE_HELP: list({ label: 'Inline help', value: 0, options: ['As helper text', 'As tooltip'] }), 
 };
 
 // Add 'key' name to settings for reference

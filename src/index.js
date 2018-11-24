@@ -19,6 +19,8 @@ const AppContainer = styled.div`
 class App extends React.Component {
     constructor(props) {
         super(props);
+      
+        // make it like: `{ SETTING_NAME: <value> }`
         const settingValues = {};
         _.each(settings, (setting, key) => {
           settingValues[key] = setting.value;
@@ -37,7 +39,7 @@ class App extends React.Component {
         return (
             <AppContainer className="App">
                 {/*<FormElements {...this.state} />*/}
-                {/*<NormalForm {...this.state}/>*/}
+                <NormalForm {...this.state}/>
                 <SettingsPanel settings={this.state} updateSetting={(name, value) => this.updateSetting(name, value)} />
             </AppContainer>
         );

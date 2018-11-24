@@ -12,30 +12,6 @@ import { ProgressIndicator } from "../components/ProgressIndicator";
 import { GroupHeading } from "../components/GroupHeading";
 import * as _ from 'lodash';
 
-import {
-  STRETCH_WIDTH,
-  SINGLE_PAGE,
-  USE_GROUPS,
-  MULTI_COLUMN,
-  FIELD_GAP,
-  GROUP_GAP,
-
-  ERRORS_EXPAND,
-  ERROR_BREATHING_ROOM,
-  FORCE_ERRORS,
-
-  PROGRESS_POSITION,
-  PROGRESS_TYPE,
-  PROGRESS_ORIENTATION,
-  SEPARATE_PAGES_FOR_PROGRESS,
-
-  SHOW_SUMMARY,
-  TYPEFORM,
-  HIDDEN_FIELDS,
-  PROGRESSIVE_DISCLOSURE,
-  INLINE_HELP,
-} from "../settings/Settings";
-
 // import "./styles.css";
 
 const FormContainer = styled.div`
@@ -73,18 +49,18 @@ export class NormalForm extends React.Component {
 
   getOptions(preferred) {
     const { 
-      [STRETCH_WIDTH.name]: stretchWidth,
-      [ERROR_BREATHING_ROOM.name]: errorsHaveBreathingRoom,
-      [FIELD_GAP.name]: fieldGap,
+      STRETCH_WIDTH,
+      ERROR_BREATHING_ROOM,
+      FIELD_GAP,
     } = this.props;
     return {
       field: {
         ...preferred,
-        width: stretchWidth ? '100%': preferred.width,
-        alwaysShowHelperText: errorsHaveBreathingRoom,
+        width: STRETCH_WIDTH ? '100%': preferred.width,
+        alwaysShowHelperText: ERROR_BREATHING_ROOM,
       },
       container: {
-        fieldGap,
+        FIELD_GAP,
       }
     };
   }
@@ -115,12 +91,13 @@ export class NormalForm extends React.Component {
   }
 
   createColumns(columns) {
+//     .map(field => this.createField(field))}
     return (<div style={{display: 'flex'}}>
       {columns.map(fields => {
         console.log('fields', fields)
       return (
         <Column>
-          {fields.map(field => this.createField(field))}
+          {fields}
         </Column>
       );
       })}
@@ -129,23 +106,24 @@ export class NormalForm extends React.Component {
   }
 
   resolveMultiColumn(columns) {
-    const { [MULTI_COLUMN.name]: multiColumn, } = this.props;
-    if (multiColumn) {
+    const { MULTI_COLUMN } = this.props;
+    if (MULTI_COLUMN) {
       return this.createColumns(columns);
     }
     const fields = _.flatten(columns);//sections.reduce((current, column) => current.concat(column))
-    return fields.map(field => this.createField(field))
+    return fields; //.map(field => this.createField(field))
   }
 
   resolveProgressiveDisclosure(preferredOptions) {
-    const { [PROGRESSIVE_DISCLOSURE.name]: progressiveDisclosure, } = this.props;
+    const { PROGRESSIVE_DISCLOSURE } = this.props;
     const field = {
       Radio: { ...preferredOptions, field: RadioButtonGroup },
       'Segmented Control': { ...preferredOptions, field: SegmentedControl },
-    }[progressiveDisclosure];
-    console.log('progressiveDisclosure', progressiveDisclosure)
-    console.log('FIELD', field)
-    return null;//this.createField(field);
+    }[PROGRESSIVE_DISCLOSURE];
+    console.log('progressiveDisclosure', PROGRESSIVE_DISCLOSURE)
+    console.log('FIELD', field);
+    return field;
+//     return this.createField(field);
   }
 
   render() {
@@ -154,55 +132,55 @@ export class NormalForm extends React.Component {
       styles.transform = "rotate(180deg)";
     }
 
-    let sectionPaymentDetails = [
-      [
-        { field: InputField, label: 'Beneficiary name', width: '300px' },
-        { field: InputField, label: 'Bank', width: '240px' },
-        { field: InputField, label: 'Branch', width: '240px' },     
-      ],
-      [
-        { field: InputField, label: 'Account number', width: '240px' },
-        { field: InputField, label: 'Account type', width: '240px' },
-        { field: InputField, label: 'Amount', width: '240px' },
-      ]
-    ];
+//     let sectionPaymentDetails = [
+//       [
+//         { field: InputField, label: 'Beneficiary name', width: '300px' },
+//         { field: InputField, label: 'Bank', width: '240px' },
+//         { field: InputField, label: 'Branch', width: '240px' },     
+//       ],
+//       [
+//         { field: InputField, label: 'Account number', width: '240px' },
+//         { field: InputField, label: 'Account type', width: '240px' },
+//         { field: InputField, label: 'Amount', width: '240px' },
+//       ]
+//     ];
 
-    let sectionNotices = [
-      [
-        { field: InputField, label: 'My reference', width: '240px' },
-        { field: InputField, label: 'Beneficiary reference', width: '240px' },
-      ],
-      [
-        { field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" },
-        { field: SegmentedControl, label: 'Send beneficiary a notice of payment by', segments: ["None", "SMS", "Email", "Fax"], value: "None" },
-      ],
-    ];
+//     let sectionNotices = [
+//       [
+//         { field: InputField, label: 'My reference', width: '240px' },
+//         { field: InputField, label: 'Beneficiary reference', width: '240px' },
+//       ],
+//       [
+//         { field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" },
+//         { field: SegmentedControl, label: 'Send beneficiary a notice of payment by', segments: ["None", "SMS", "Email", "Fax"], value: "None" },
+//       ],
+//     ];
 
     const fields = [
       this.createField({ field: ProgressIndicator, step: 1, totalSteps: 3 }),
       this.createField({ field: GroupHeading, label: 'Payment details' }),
       this.resolveMultiColumn([
         [
-          { field: InputField, label: 'Beneficiary name', width: '300px' },
-          { field: InputField, label: 'Bank', width: '240px' },
-          { field: InputField, label: 'Branch', width: '240px' },
+          this.createField({ field: InputField, label: 'Beneficiary name', width: '300px' }),
+          this.createField({ field: InputField, label: 'Bank', width: '240px' }),
+          this.createField({ field: InputField, label: 'Branch', width: '240px' }),
         ],
         [
-          { field: InputField, label: 'Account number', width: '240px' },
-          { field: InputField, label: 'Account type', width: '240px' },
-          { field: InputField, label: 'Amount', width: '240px' },
+          this.createField({ field: InputField, label: 'Account number', width: '240px' }),
+          this.createField({ field: InputField, label: 'Account type', width: '240px' }),
+          this.createField({ field: InputField, label: 'Amount', width: '240px' }),
         ]
       ]),
       this.createField({ field: Checkbox, label: 'Immediate Interbank Payment ' }),
       this.createField({ field: GroupHeading, label: 'Notice of payment details' }),
       this.resolveMultiColumn([
         [
-          { field: InputField, label: 'My reference', width: '240px' },
-          { field: InputField, label: 'Beneficiary reference', width: '240px' },
+          this.createField({ field: InputField, label: 'My reference', width: '240px' }),
+          this.createField({ field: InputField, label: 'Beneficiary reference', width: '240px' }),
         ],
         [
-          // this.resolveProgressiveDisclosure({ field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" }),
-          // this.resolveProgressiveDisclosure({ field: SegmentedControl, label: 'Send beneficiary a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" }),
+          this.createField(this.resolveProgressiveDisclosure({ field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" })),
+          this.createField(this.resolveProgressiveDisclosure({ field: SegmentedControl, label: 'Send beneficiary a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" })),
         ],
       ])
     ]
