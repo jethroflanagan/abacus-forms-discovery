@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>info icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M9,16 C4.581722,16 1,12.418278 1,8 C1,3.581722 4.581722,0 9,0 C13.418278,0 17,3.581722 17,8 C17,12.418278 13.418278,16 9,16 Z M9,15 C12.8659932,15 16,11.8659932 16,8 C16,4.13400675 12.8659932,1 9,1 C5.13400675,1 2,4.13400675 2,8 C2,11.8659932 5.13400675,15 9,15 Z M8.304,12 L8.304,6.108 L9.684,6.108 L9.684,12 L8.304,12 Z M9,5.076 C8.75199876,5.076 8.5480008,5.00400072 8.388,4.86 C8.2279992,4.71599928 8.148,4.52800116 8.148,4.296 C8.148,4.06399884 8.2279992,3.87400074 8.388,3.726 C8.5480008,3.57799926 8.75199876,3.504 9,3.504 C9.24800124,3.504 9.4519992,3.57799926 9.612,3.726 C9.7720008,3.87400074 9.852,4.06399884 9.852,4.296 C9.852,4.52800116 9.7720008,4.71599928 9.612,4.86 C9.4519992,5.00400072 9.24800124,5.076 9,5.076 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="3.-Forms-/-Inline-alerts-/-Icons-/-Icon_info" transform="translate(-1.000000, 0.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="info-icon" fill="#2F9FFF" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>

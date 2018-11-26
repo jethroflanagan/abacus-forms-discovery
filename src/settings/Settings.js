@@ -33,10 +33,11 @@ export const settings = {
   STRETCH_WIDTH: { label: 'Stretch to fill width', value: false },
   SINGLE_PAGE: { label: 'Single page', value: false },
   USE_GROUPS: { label: 'Group fields', value: true },
-  MULTI_COLUMN: list({ label: 'Multiple columns', value: 0, options: ['Single', 'Z-pattern', 'Newspaper style'] }),
+  MULTI_COLUMN: list({ label: 'Multiple columns', value: 0, options: ['Single', 'Z-pattern', 'Newspaper columns'] }),
+  COLUMN_GAP: { label: 'Gap between columns', value: 10, type: 'number' },
   FIELD_GAP: { label: 'Gap between fields', value: 10, type: 'number' },
-  GROUP_GAP: { label: 'Gap between groups', value: 20, type: 'number' }, 
-  
+  GROUP_GAP: { label: 'Gap between groups', value: 20, type: 'number' },
+
     // errors
   ERRORS_EXPAND: { label: 'Errors tap to expand', value: true },
   ERROR_BREATHING_ROOM: { label: 'Errors have breathing room', value: true }, 
@@ -54,7 +55,9 @@ export const settings = {
   TYPEFORM: { label: 'Typeform mode', value: false }, 
   HIDDEN_FIELDS: list({ label: 'Hidden fields', value: 0, options: ['None (show as disabled)', 'Allow'] }), 
   PROGRESSIVE_DISCLOSURE: list({ label: 'Progressive disclosure type', value: 0, options: ['Radio', 'Segmented Control', 'Tabbed Radio header jam'] }), 
-  INLINE_HELP: list({ label: 'Inline help', value: 0, options: ['As helper text', 'As tooltip'] }), 
+  INLINE_HELP: list({ label: 'Inline help', value: 0, options: ['As helper text', 'As tooltip'] }),
+  UPSIDE_DOWN: { label: 'Demogorgon', value: false },
+
 };
 
 // Add 'key' name to settings for reference

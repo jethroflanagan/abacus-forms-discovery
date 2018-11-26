@@ -151,28 +151,31 @@ export class SettingsPanel extends React.Component {
 
     render() {
         const {
-            isOpen,
+          isOpen,
           SINGLE_PAGE,
+          MULTI_COLUMN,
         } = this.state;
         const toggle = (name, options) => this.createToggle(name, options);
         const label = (name, options) => this.createLabel(name, options);
         const number = (name, options) => this.createNumberInput(name, options);
         const list = (name, options) => this.createListInput(name, options);
 
-        const resolveSinglePage = SINGLE_PAGE ? { disabled: true } : null;
+        const disableForSinglePage = SINGLE_PAGE ? { disabled: true } : null;
+        const disableForSingleColumn = MULTI_COLUMN === 'Single' ? { disabled: true } : null;
         const options = [
             label('Layout'),
             toggle('STRETCH_WIDTH'),
             toggle('USE_GROUPS'),
             list('MULTI_COLUMN'),
+            number('COLUMN_GAP', disableForSingleColumn),
             number('FIELD_GAP'),
             number('GROUP_GAP'),
             label('Progress'),
             toggle('SINGLE_PAGE'),
-            list('PROGRESS_POSITION', resolveSinglePage),
-            list('PROGRESS_TYPE', resolveSinglePage),
-            list('PROGRESS_ORIENTATION', resolveSinglePage),
-            list('SEPARATE_PAGES_FOR_PROGRESS', resolveSinglePage),
+            list('PROGRESS_POSITION', disableForSinglePage),
+            list('PROGRESS_TYPE', disableForSinglePage),
+            list('PROGRESS_ORIENTATION', disableForSinglePage),
+            list('SEPARATE_PAGES_FOR_PROGRESS', disableForSinglePage),
             label('Errors'),
             toggle('ERROR_BREATHING_ROOM'),
             toggle('ERRORS_EXPAND'),
@@ -182,6 +185,7 @@ export class SettingsPanel extends React.Component {
             toggle('TYPEFORM'),
             list('PROGRESSIVE_DISCLOSURE'),
             list('INLINE_HELP'),
+            toggle('UPSIDE_DOWN'),
         ];
         return (
             <Container isOpen={isOpen}>

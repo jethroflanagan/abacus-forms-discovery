@@ -18,7 +18,7 @@ export class Stack extends React.Component {
   render() {
     const { children, gap, layout } = this.props;
     return (
-      <Container>
+      <Container {...this.props}>
         {children}
       </Container>
     );

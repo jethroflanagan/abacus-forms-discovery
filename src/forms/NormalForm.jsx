@@ -39,6 +39,11 @@ const Table = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 10px;
 `;
+const TableColumnLayout = styled(Table)`
+  display: grid;
+  grid-template-rows: repeat(${ p => p.rows}, 1fr);
+  grid-auto-flow: column;
+`;
 
 export class NormalForm extends React.Component {
   constructor(props) {
@@ -96,7 +101,16 @@ export class NormalForm extends React.Component {
     // }
   }
 
-  createColumns(style, fields) {
+  createColumns(direction, fields) {
+    if (direction === 'Newspaper columns') {
+      console.log('Fields', fields);
+      console.log('Fields', fields.length);
+      return (
+        <TableColumnLayout rows={Math.ceil(fields.length / 2)}>
+          {fields}
+        </TableColumnLayout>
+      );
+    }
     return (
       <Table>
         {fields}
@@ -124,7 +138,7 @@ export class NormalForm extends React.Component {
 
   render() {
     const styles = {};
-    if (this.state.language === "English (AU)") {
+    if (this.props.UPSIDE_DOWN) {
       styles.transform = "rotate(180deg)";
     }
 
@@ -155,38 +169,30 @@ export class NormalForm extends React.Component {
     const fields = [
       this.createField({ field: ProgressIndicator, step: 1, totalSteps: 3 }),
       this.createField({ field: GroupHeading, label: 'Payment details' }),
-      this.resolveMultiColumn([
-        [
-          this.createField({ field: InputField, label: 'Beneficiary name', width: '300px' }),
-          this.createField({ field: InputField, label: 'Bank', width: '240px' }),
-          this.createField({ field: InputField, label: 'Branch', width: '240px' }),
-        ],
-        [
-          this.createField({ field: InputField, label: 'Account number', width: '240px' }),
-          this.createField({ field: InputField, label: 'Account type', width: '240px' }),
-          this.createField({ field: InputField, label: 'Amount', width: '240px' }),
-        ]
-      ]),
+      this.resolveMultiColumn(
+        this.createField({ field: InputField, label: 'Beneficiary name', width: '300px' }),
+        this.createField({ field: InputField, label: 'Bank', width: '240px' }),
+        this.createField({ field: InputField, label: 'Branch', width: '240px' }),
+        this.createField({ field: InputField, label: 'Account number', width: '240px' }),
+        this.createField({ field: InputField, label: 'Account type', width: '240px' }),
+        this.createField({ field: InputField, label: 'Amount', width: '240px' }),
+      ),
       this.createField({ field: Checkbox, label: 'Immediate Interbank Payment' }),
       this.createField({ field: GroupHeading, label: 'Notice of payment details' }),
-      this.resolveMultiColumn([
-        [
-          this.createField({ field: InputField, label: 'My reference', width: '240px' }),
-          this.createField({ field: InputField, label: 'Beneficiary reference', width: '240px' }),
-        ],
-        [
-          this.createField(this.resolveProgressiveDisclosure({ field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" })),
-          this.createField(this.resolveProgressiveDisclosure({ field: SegmentedControl, label: 'Send beneficiary a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" })),
-        ],
-      ])
+      this.resolveMultiColumn(
+        this.createField({ field: InputField, label: 'My reference', width: '240px' }),
+        this.createField({ field: InputField, label: 'Beneficiary reference', width: '240px' }),
+        this.createField(this.resolveProgressiveDisclosure({ field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" })),
+        this.createField(this.resolveProgressiveDisclosure({ field: SegmentedControl, label: 'Send beneficiary a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" })),
+      )
     ]
 
     // let formContent = fields.map(field => this.createField(field))
     const formContent = fields;
 
     return (
-      <FormContainer style={styles}>
-        <Stack>
+      <FormContainer>
+        <Stack style={styles}>
           {formContent}
         </Stack>
       </FormContainer>

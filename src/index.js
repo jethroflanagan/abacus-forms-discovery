@@ -28,6 +28,7 @@ class App extends React.Component {
         this.state = {
           ...settingValues,
         };
+        console.log (this.state);
     }
     updateSetting(name, value) {
         this.setState({

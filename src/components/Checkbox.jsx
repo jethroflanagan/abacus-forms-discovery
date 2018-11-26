@@ -1,5 +1,7 @@
 import * as React from "react";
 import styled from 'styled-components';
+import { ReactComponent as Tick } from '../assets/icons/tick.svg';
+import * as colors from '../global/Colors';
 
 const Container = styled.div`
     display: flex;
@@ -23,14 +25,16 @@ const RadioSignal = styled.div`
     // border-radius: 20px;
     width: 15px;
     height: 15px;
-    background: ${({ checked, disabled }) => (checked
-        ? (disabled ? '#ccc' : '#555')
-        : 'transparent'
-    )};
+    opacity: ${p => p.disabled ? .5 : 1};
+
+    display: ${p => p.checked
+        ? 'block'
+        : 'none'
+    };
 `;
 
 const Label = styled.div`
-    color: #555555;
+    color: ${colors.TEXT_NORMAL};
     margin-left: 9px;
     text-align: left;
 `;
@@ -72,7 +76,9 @@ export class Checkbox extends React.Component {
             // onClick={() => this.toggle()}>
             <Container {...this.props}>
                 <Radio checked={checked} disabled={disabled}>
-                    <RadioSignal checked={checked} disabled={disabled} />
+                  <RadioSignal>
+                    <Tick checked={checked} disabled={disabled} />
+                  </RadioSignal>
                 </Radio>
                 <Label>{label}</Label>
             </Container>
