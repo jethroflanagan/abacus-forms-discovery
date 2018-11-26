@@ -15,7 +15,7 @@ import * as _ from 'lodash';
 // import "./styles.css";
 
 const FormContainer = styled.div`
-  max-width: 580px;
+  width: ${ p => p.width + 'px' || '100%' };
   padding: 20px;
 `;
 
@@ -27,17 +27,11 @@ const FieldContainer = styled.div`
   }
 `;
 
-const Column = styled.div`
-  margin-right: 10px;
-  &:last-child {
-    margin-right: 0;
-  }
-`;
-
 const Table = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 10px;
+  width: 100%;
+  grid-gap: ${p => p.COLUMN_GAP}px;
 `;
 const TableColumnLayout = styled(Table)`
   display: grid;
@@ -102,17 +96,16 @@ export class NormalForm extends React.Component {
   }
 
   createColumns(direction, fields) {
+    const options = { COLUMN_GAP: this.props.COLUMN_GAP };
     if (direction === 'Newspaper columns') {
-      console.log('Fields', fields);
-      console.log('Fields', fields.length);
       return (
-        <TableColumnLayout rows={Math.ceil(fields.length / 2)}>
+        <TableColumnLayout rows={Math.ceil(fields.length / 2)} {...options}>
           {fields}
         </TableColumnLayout>
       );
     }
     return (
-      <Table>
+      <Table {...options}>
         {fields}
       </Table>
     );
@@ -191,7 +184,7 @@ export class NormalForm extends React.Component {
     const formContent = fields;
 
     return (
-      <FormContainer>
+      <FormContainer width={this.props.FORM_WIDTH}>
         <Stack style={styles}>
           {formContent}
         </Stack>

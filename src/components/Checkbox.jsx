@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 
 const Radio = styled.div`
-    // border-radius: 20px;
+    border-radius: 4px;
     border: 1px solid ${({ disabled }) => disabled ? '#ccc' : '#555'};
     background: ${({ disabled }) => (disabled ? 'fafafa' : '#fff')};
     width: 23px;
@@ -22,9 +22,9 @@ const Radio = styled.div`
 `;
 
 const RadioSignal = styled.div`
-    // border-radius: 20px;
-    width: 15px;
-    height: 15px;
+    margin-top: -9px;
+    width: 11px;
+    height: 9px;
     opacity: ${p => p.disabled ? .5 : 1};
 
     display: ${p => p.checked
@@ -63,21 +63,20 @@ export class Checkbox extends React.Component {
         }
     }
 
-    // toggle() {
-    //   this.setState({
-    //     checked: !this.state.checked,
-    //   });
-    // }
+    toggle() {
+      this.setState({
+        checked: !this.state.checked,
+      });
+    }
 
     render() {
         const { disabled, label } = this.props;
         const { checked } = this.state;
         return (
-            // onClick={() => this.toggle()}>
-            <Container {...this.props}>
+            <Container {...this.props} onClick={() => this.toggle()}>
                 <Radio checked={checked} disabled={disabled}>
-                  <RadioSignal>
-                    <Tick checked={checked} disabled={disabled} />
+                  <RadioSignal checked={checked} disabled={disabled} >
+                    <Tick />
                   </RadioSignal>
                 </Radio>
                 <Label>{label}</Label>

@@ -164,6 +164,7 @@ export class SettingsPanel extends React.Component {
         const disableForSingleColumn = MULTI_COLUMN === 'Single' ? { disabled: true } : null;
         const options = [
             label('Layout'),
+            number('FORM_WIDTH'),
             toggle('STRETCH_WIDTH'),
             toggle('USE_GROUPS'),
             list('MULTI_COLUMN'),

@@ -30,6 +30,7 @@ const list = (config) => ({ ...config, value: config.options[config.value] });
 
 export const settings = {
     // layout
+  FORM_WIDTH: { label: 'Form width', value: 580, type: 'number' },
   STRETCH_WIDTH: { label: 'Stretch to fill width', value: false },
   SINGLE_PAGE: { label: 'Single page', value: false },
   USE_GROUPS: { label: 'Group fields', value: true },

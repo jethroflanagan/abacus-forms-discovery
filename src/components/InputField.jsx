@@ -92,9 +92,9 @@ export class InputField extends React.Component {
         isPassword: false,
         infoText: '',
         alwaysShowHelperText: false,
-        status: 'error',
-        
-        // size of evrything
+        status: '',
+
+        // size of everything
         width: '250px',
         // size of input
         fieldWidth: '100%',
