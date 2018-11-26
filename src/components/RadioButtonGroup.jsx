@@ -23,7 +23,7 @@ const List = styled.div`
     }
 `;
 const Label = styled.div`
-    color: ${colors.TEXT_NORMAL};
+    color: ${p => p.disabled ? colors.TEXT_DISABLED : colors.TEXT_NORMAL};
     margin-bottom: 5px;
     font-weight: 600;
 `;
@@ -50,7 +50,7 @@ export class RadioButtonGroup extends React.Component {
   }
 
   toggle(value) {
-    console.log('radio', value)
+    if (this.props.disabled) return;
     this.setState({
       value,
     });
@@ -64,7 +64,7 @@ export class RadioButtonGroup extends React.Component {
     const { value } = this.state;
     return (
       <Container>
-        { label ? <Label>{label}</Label> : null }
+        { label ? <Label disabled={disabled}>{label}</Label> : null }
         <List>
           { options.map(label => <RadioButton label={label} checked={value===label} disabled={disabled} onClick={() => this.toggle(label)} />)}
         </List>

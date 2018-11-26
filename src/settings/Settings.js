@@ -31,7 +31,7 @@ const list = (config) => ({ ...config, value: config.options[config.value] });
 export const settings = {
     // layout
   STRETCH_WIDTH: { label: 'Stretch to fill width', value: false },
-  SINGLE_PAGE: { label: 'Single page', value: true },
+  SINGLE_PAGE: { label: 'Single page', value: false },
   USE_GROUPS: { label: 'Group fields', value: true },
   MULTI_COLUMN: { label: 'Multiple columns', value: false }, 
   FIELD_GAP: { label: 'Gap between fields', value: 10, type: 'number' },
@@ -60,7 +60,6 @@ export const settings = {
 // Add 'key' name to settings for reference
 _.map(settings, (setting, key) => { settings[key] = { ...setting, name: key } });
 
-console.log('fix', settings)
 
 // todo
 // async input

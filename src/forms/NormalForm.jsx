@@ -21,7 +21,7 @@ const FormContainer = styled.div`
 
 const FieldContainer = styled.div`
   width: 100%;
-  margin-bottom: ${ p => p.fieldGap }px;
+  margin-bottom: ${ p => p.FIELD_GAP || 0 }px;
   &(:last-child){
     margin-bottom: 0;
   }
@@ -94,7 +94,6 @@ export class NormalForm extends React.Component {
 //     .map(field => this.createField(field))}
     return (<div style={{display: 'flex'}}>
       {columns.map(fields => {
-        console.log('fields', fields)
       return (
         <Column>
           {fields}
@@ -120,8 +119,6 @@ export class NormalForm extends React.Component {
       Radio: { ...preferredOptions, field: RadioButtonGroup },
       'Segmented Control': { ...preferredOptions, field: SegmentedControl },
     }[PROGRESSIVE_DISCLOSURE];
-    console.log('progressiveDisclosure', PROGRESSIVE_DISCLOSURE)
-    console.log('FIELD', field);
     return field;
 //     return this.createField(field);
   }
@@ -171,7 +168,7 @@ export class NormalForm extends React.Component {
           this.createField({ field: InputField, label: 'Amount', width: '240px' }),
         ]
       ]),
-      this.createField({ field: Checkbox, label: 'Immediate Interbank Payment ' }),
+      this.createField({ field: Checkbox, label: 'Immediate Interbank Payment' }),
       this.createField({ field: GroupHeading, label: 'Notice of payment details' }),
       this.resolveMultiColumn([
         [

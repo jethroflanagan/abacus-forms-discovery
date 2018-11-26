@@ -1,8 +1,10 @@
 import * as React from "react";
 import styled from 'styled-components';
+import * as colors from '../global/Colors';
 
 const Container = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: center;
     width: 400px;
 `;
@@ -42,6 +44,12 @@ const Segment = styled.div`
         border-right: 1px solid #ccc;
     }
 `;
+const Label = styled.div`
+    color: ${colors.TEXT_NORMAL};
+    margin-bottom: 5px;
+    font-weight: 600;
+    text-align: left;
+`;
 
 export class SegmentedControl extends React.Component {
   static defaultProps = {
@@ -61,7 +69,7 @@ export class SegmentedControl extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { numSegments, active } = this.props;
+    const { numSegments, active, label } = this.props;
 
     if (active === prevProps.active) return;
 
@@ -86,11 +94,13 @@ export class SegmentedControl extends React.Component {
   }
 
   render() {
-    const { numSegments, options, disabled } = this.props;
+    const { numSegments, options, disabled, label } = this.props;
     const { active } = this.state;
 
     return (
       <Container>
+        {label ? <Label>{label}</Label> : null}
+
         <List>
           {options.map((segment, i) => <Segment key={i} active={active === i} disabled={disabled} onClick={this.chooseActive(i)}>{segment}</Segment>)}
         </List>

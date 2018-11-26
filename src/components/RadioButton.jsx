@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from 'styled-components';
+import * as colors from '../global/Colors';
 
 const Container = styled.div`
     display: flex;
@@ -30,7 +31,7 @@ const RadioSignal = styled.div`
 `;
 
 const Label = styled.div`
-    color: #555555;
+    color: ${p => p.disabled ? colors.TEXT_DISABLED : colors.TEXT_NORMAL};
     margin-left: 9px;
     text-align: left;
 `;
@@ -74,7 +75,7 @@ export class RadioButton extends React.Component {
         <Radio checked={checked} disabled={disabled}>
           <RadioSignal checked={checked} disabled={disabled} />
         </Radio>
-        <Label>{label}</Label>
+        <Label disabled={disabled}>{label}</Label>
       </Container>
     );
   }

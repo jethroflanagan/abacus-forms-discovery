@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import styled from 'styled-components';
 // import { IconInfo, IconError, IconSuccess, IconWarning } from './icons';
 import { IconError } from './icons/IconError';
@@ -16,14 +16,8 @@ const Container = styled.div`
 const Box = styled.div`
     display: flex;
     position: relative;
-    background: ${p => p.disabled ? '#fafafa' : '#fff'};
-    border: 1px solid ${p => (
-    p.disabled
-      ? '#ddd'
-      : p.isFocused
-        ? colors.FOCUS
-        : p.statusColor
-  )};
+    background: ${p => (p.disabled ? '#fafafa' : '#fff')};
+    border: 1px solid ${p => (p.disabled ? '#ddd' : p.isFocused ? colors.FOCUS : p.statusColor)};
     border-radius: 5px;
     width: 100%;
     height: 40px;
@@ -55,7 +49,7 @@ const StatusIcon = styled.div`
 
 const Input = styled.input`
     /* color: #555; */
-    color: ${p => p.disabled ? '#666' : colors.TEXT_NORMAL};
+    color: ${p => (p.disabled ? '#666' : colors.TEXT_NORMAL)};
     font-size: 16px;
     border: none;
     background: transparent;
@@ -87,117 +81,123 @@ const Icon = styled.div`
 `;
 
 export class InputField extends React.Component {
-  // Set default properties
-  static defaultProps = {
-    label: "Label",
-    disabled: false,
-    value: '',
-    placeholder: '',
-    helperText: '',
-    disabled: false,
-    isPassword: false,
-    infoText: '',
-    alwaysShowHelperText: false,
-  }
+    // Set default properties
+    static defaultProps = {
+        label: 'Label',
+        disabled: false,
+        value: '',
+        placeholder: '',
+        helperText: '',
+        disabled: false,
+        isPassword: false,
+        infoText: '',
+        alwaysShowHelperText: false,
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: props.value,
-      isFocused: false,
+        // size of evrything
+        width: '250px',
+        // size of input
+        fieldWidth: '100%',
     };
-  }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { value } = this.props;
-    if (value === prevProps.value) {
-      return;
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: props.value,
+            isFocused: false,
+        };
     }
-    if (this.state.value !== value) {
-      this.setState({ value });
+
+    componentDidUpdate(prevProps, prevState) {
+        const { value } = this.props;
+        if (value === prevProps.value) {
+            return;
+        }
+        if (this.state.value !== value) {
+            this.setState({ value });
+        }
     }
-  }
 
-  onFocus(e) {
-    this.setState({
-      isFocused: true,
-    });
-  }
-
-  onBlur(e) {
-    this.setState({
-      isFocused: false,
-    });
-  }
-
-  onChange(e) {
-    let value = e.target.value;
-    this.setState({
-      value,
-    });
-    if (this.props.onUpdateValue) {
-      this.props.onUpdateValue(value);
+    onFocus(e) {
+        this.setState({
+            isFocused: true,
+        });
     }
-  }
 
-  render() {
-    const { 
-      disabled, 
-      label, 
-      helperText, 
-      status, 
-      placeholder, 
-      isPassword, 
-      infoText,
-      width,
-
-      alwaysShowHelperText, // Errors have breathing room
-    } = this.props;
-    const { 
-      isFocused, 
-      value,
-    } = this.state;
-
-    let statusColor = '#555';
-    let statusIcon = null;
-    switch (status) {
-      case 'error':
-        statusColor = colors.ERROR;
-        statusIcon = <IconError />;
-        break;
-      case 'warning':
-        statusColor = colors.WARNING;
-        statusIcon = null//<IconWarning />;
-        break;
-      case 'success':
-        statusColor = colors.SUCCESS;
-        statusIcon = null//<IconSuccess />;
-        break;
+    onBlur(e) {
+        this.setState({
+            isFocused: false,
+        });
     }
-    return (
-      <Container style={{ width }}>
-        <LabelContainer>
-          <Label>{label}</Label>
-          {infoText ? <Icon><IconInfo /></Icon> : null }
-        </LabelContainer>
-        <Box disabled={disabled}
-          isFocused={isFocused}
-          statusColor={statusColor}>
-          {value.length ? null : <Placeholder>{placeholder}</Placeholder>}
-          <Input type={isPassword ? 'password' : 'text'}
-            onChange={(e) => this.onChange(e)}
-            value={value}
-            disabled={disabled}
-            onFocus={e => this.onFocus(e)}
-            onBlur={e => this.onBlur(e)}></Input>
-        </Box>
-        {helperText || alwaysShowHelperText ? (
-          <HelperTextContainer>
-            {statusIcon ? <StatusIcon>{statusIcon}</StatusIcon> : null}
-            <HelperText statusColor={statusColor}>{helperText}&nbsp;</HelperText>
-          </HelperTextContainer>
-        ): null}
-      </Container>
-    );
-  }
+
+    onChange(e) {
+        let value = e.target.value;
+        this.setState({
+            value,
+        });
+        if (this.props.onUpdateValue) {
+            this.props.onUpdateValue(value);
+        }
+    }
+
+    render() {
+        const {
+            disabled,
+            label,
+            helperText,
+            status,
+            placeholder,
+            isPassword,
+            infoText,
+            width,
+            fieldWidth,
+            alwaysShowHelperText, // Errors have breathing room
+        } = this.props;
+        const { isFocused, value } = this.state;
+
+        let statusColor = '#555';
+        let statusIcon = null;
+        switch (status) {
+            case 'error':
+                statusColor = colors.ERROR;
+                statusIcon = <IconError />;
+                break;
+            case 'warning':
+                statusColor = colors.WARNING;
+                statusIcon = null; //<IconWarning />;
+                break;
+            case 'success':
+                statusColor = colors.SUCCESS;
+                statusIcon = null; //<IconSuccess />;
+                break;
+        }
+        return (
+            <Container style={{ width }}>
+                <LabelContainer>
+                    <Label>{label}</Label>
+                    {infoText ? (
+                        <Icon>
+                            <IconInfo />
+                        </Icon>
+                    ) : null}
+                </LabelContainer>
+                <Box disabled={disabled} isFocused={isFocused} statusColor={statusColor} style={{ width: fieldWidth }}>
+                    {value.length ? null : <Placeholder>{placeholder}</Placeholder>}
+                    <Input
+                        type={isPassword ? 'password' : 'text'}
+                        onChange={e => this.onChange(e)}
+                        value={value}
+                        disabled={disabled}
+                        onFocus={e => this.onFocus(e)}
+                        onBlur={e => this.onBlur(e)}
+                    />
+                </Box>
+                {helperText || alwaysShowHelperText ? (
+                    <HelperTextContainer>
+                        {statusIcon ? <StatusIcon>{statusIcon}</StatusIcon> : null}
+                        <HelperText statusColor={statusColor}>{helperText}&nbsp;</HelperText>
+                    </HelperTextContainer>
+                ) : null}
+            </Container>
+        );
+    }
 }

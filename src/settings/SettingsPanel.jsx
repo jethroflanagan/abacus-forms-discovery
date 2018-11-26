@@ -4,6 +4,7 @@ import * as colors from '../global/Colors';
 import { ToggleSwitch } from '../components/ToggleSwitch';
 import { InputField } from '../components/InputField';
 import { RadioButtonGroup } from '../components/RadioButtonGroup';
+import { GroupHeading } from '../components/GroupHeading'
 // import {
 //   STRETCH_WIDTH,
 //   SINGLE_PAGE,
@@ -27,8 +28,9 @@ import { RadioButtonGroup } from '../components/RadioButtonGroup';
 import { settings } from './Settings';
 
 const Container = styled.div`
+    background: ${ p => p.isOpen ? '#efefef' : 'transparent' };
     display: flex;
-    width: 400px;
+    max-width: 400px;
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
@@ -37,6 +39,14 @@ const Container = styled.div`
     }
 `;
 
+const Content = styled.div`
+    padding: 20px;
+    padding-top: 0;
+    max-width: 400px;
+    & > * {
+        margin-bottom: 10px;
+    }
+`;
 const GroupLabel = styled.div`
     display: flex;
     width: 100%;
@@ -44,8 +54,51 @@ const GroupLabel = styled.div`
     font-size: 18px;
     padding-top: 5px;
     border-top: 1px solid #aaa;
+    &:first-child {
+        border-top: none;
+    }
 `;
 
+const MenuToggle = styled.div`
+    display: inline-flex;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    padding: 0 10px;
+    cursor: pointer;
+`;
+
+const MenuIcon = styled.div`
+    display: inline-block;
+    width: 100%;
+    height: 14px;
+    border-top: 2px #333 solid;
+    border-bottom: 2px #333 solid;
+    &:after {
+        content: '';
+        display: block;
+        background: #333;
+        margin-top: 4px;
+        width: 100%;
+        height: 2px;
+    }
+`;
+
+const Heading = styled.div`
+    font-size: 24px;
+    text-align: left;
+    padding: 20px;
+    padding-bottom: 0;
+    color: ${colors.TEXT_NORMAL};
+`;
+
+const Top = styled.div`
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: space-between;
+`;
 export class SettingsPanel extends React.Component {
     static defaultProps = {};
 
@@ -54,6 +107,7 @@ export class SettingsPanel extends React.Component {
         console.log(props);
         this.state = {
             ...props.settings,
+            isOpen: true,
         };
     }
 
@@ -74,50 +128,57 @@ export class SettingsPanel extends React.Component {
         return <GroupLabel>{name}</GroupLabel>;
     }
 
-    createListInput(name) {
+    createListInput(name, options = {}) {
+        console.log('op', options)
         const value = this.state[name];
-        return <RadioButtonGroup label={settings[name].label} options={settings[name].options} value={value} onUpdateValue={value => this.onUpdateValue(name, value)} key={name} />;
+        return <RadioButtonGroup label={settings[name].label} options={settings[name].options} value={value} onUpdateValue={value => this.onUpdateValue(name, value)} key={name} {...options}/>;
     }
 
-    createNumberInput(name) {
+    createNumberInput(name, options) {
         const value = this.state[name];
-        return <InputField label={settings[name].label} value={value} onUpdateValue={value => this.onUpdateValue(name, value)} key={name} />;
+        return <InputField label={settings[name].label} value={value} onUpdateValue={value => this.onUpdateValue(name, value)} fieldWidth='50px' key={name} {...options}/>;
     }
 
-    createToggle(name) {
+    createToggle(name, options) {
         const value = this.state[name];
-        return <ToggleSwitch label={settings[name].label} checked={value} onUpdateValue={value => this.onUpdateValue(name, value)} key={name} />;
+        return <ToggleSwitch label={settings[name].label} checked={value} onUpdateValue={value => this.onUpdateValue(name, value)} key={name} {...options}/>;
+    }
+
+    toggleVisibility() {
+        console.log(this.state.isOpen)
+        this.setState({
+            isOpen: !this.state.isOpen,
+        })
     }
 
     render() {
-        // const {
-        //   [STRETCH_WIDTH]: stretchWidth,
-        //   [SINGLE_PAGE]: singlePage,
-        //   [FORCE_ERRORS]: forceErrors,
-        //   [USE_GROUPS]: useGroups,
-        // } = this.state;
-        const toggle = name => this.createToggle(name);
-        const label = name => this.createLabel(name);
-        const number = name => this.createNumberInput(name);
-        const list = name => this.createListInput(name);
+        const {
+            isOpen,
+          SINGLE_PAGE,
+        } = this.state;
+        const toggle = (name, options) => this.createToggle(name, options);
+        const label = (name, options) => this.createLabel(name, options);
+        const number = (name, options) => this.createNumberInput(name, options);
+        const list = (name, options) => this.createListInput(name, options);
 
+        const resolveSinglePage = SINGLE_PAGE ? { disabled: true } : null;
         const options = [
             label('Layout'),
             toggle('STRETCH_WIDTH'),
-            toggle('SINGLE_PAGE'),
             toggle('USE_GROUPS'),
             toggle('MULTI_COLUMN'),
             number('FIELD_GAP'),
             number('GROUP_GAP'),
+            label('Progress'),
+            toggle('SINGLE_PAGE'),
+            list('PROGRESS_POSITION', resolveSinglePage),
+            list('PROGRESS_TYPE', resolveSinglePage),
+            list('PROGRESS_ORIENTATION', resolveSinglePage),
+            list('SEPARATE_PAGES_FOR_PROGRESS', resolveSinglePage),
             label('Errors'),
             toggle('ERROR_BREATHING_ROOM'),
             toggle('ERRORS_EXPAND'),
             toggle('FORCE_ERRORS'),
-            label('Progress'),
-            list('PROGRESS_POSITION'),
-            list('PROGRESS_TYPE'),
-            list('PROGRESS_ORIENTATION'),
-            list('SEPARATE_PAGES_FOR_PROGRESS'),
             label('Flow'),
             toggle('SHOW_SUMMARY'),
             toggle('TYPEFORM'),
@@ -125,13 +186,18 @@ export class SettingsPanel extends React.Component {
             list('INLINE_HELP'),
         ];
         return (
-            <Container>
-                <h2>Settings</h2>
-                {options}
-                {/*<ToggleSwitch 
-          label={STRETCH_WIDTH}
-          checked={stretchWidth} 
-          onUpdateValue={value => this.onUpdateValue(STRETCH_WIDTH, value)} />*/}
+            <Container isOpen={isOpen}>
+                <Top>
+                    { isOpen ? <Heading>Settings</Heading> : null }
+                    <MenuToggle onClick={()=>this.toggleVisibility()}>
+                        <MenuIcon />
+                    </MenuToggle>
+                </Top>
+                { isOpen ? (
+                    <Content>
+                        {options}
+                    </Content>
+                ): null }
             </Container>
         );
     }

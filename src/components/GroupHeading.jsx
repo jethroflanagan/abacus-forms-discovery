@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import * as colors from '../global/Colors';
 
 const Container = styled.h2`
-    padding: 15px 0;
+    padding: 0;
+
     font-size: 24px;
     font-width: 600;
     text-align: left;
