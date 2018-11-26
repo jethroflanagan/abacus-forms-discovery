@@ -125,11 +125,10 @@ export class SettingsPanel extends React.Component {
     }
 
     createLabel(name) {
-        return <GroupLabel>{name}</GroupLabel>;
+        return <GroupLabel key={name}>{name}</GroupLabel>;
     }
 
     createListInput(name, options = {}) {
-        console.log('op', options)
         const value = this.state[name];
         return <RadioButtonGroup label={settings[name].label} options={settings[name].options} value={value} onUpdateValue={value => this.onUpdateValue(name, value)} key={name} {...options}/>;
     }
@@ -145,7 +144,6 @@ export class SettingsPanel extends React.Component {
     }
 
     toggleVisibility() {
-        console.log(this.state.isOpen)
         this.setState({
             isOpen: !this.state.isOpen,
         })
@@ -166,7 +164,7 @@ export class SettingsPanel extends React.Component {
             label('Layout'),
             toggle('STRETCH_WIDTH'),
             toggle('USE_GROUPS'),
-            toggle('MULTI_COLUMN'),
+            list('MULTI_COLUMN'),
             number('FIELD_GAP'),
             number('GROUP_GAP'),
             label('Progress'),

@@ -33,7 +33,7 @@ export const settings = {
   STRETCH_WIDTH: { label: 'Stretch to fill width', value: false },
   SINGLE_PAGE: { label: 'Single page', value: false },
   USE_GROUPS: { label: 'Group fields', value: true },
-  MULTI_COLUMN: { label: 'Multiple columns', value: false }, 
+  MULTI_COLUMN: list({ label: 'Multiple columns', value: 0, options: ['Single', 'Z-pattern', 'Newspaper style'] }),
   FIELD_GAP: { label: 'Gap between fields', value: 10, type: 'number' },
   GROUP_GAP: { label: 'Gap between groups', value: 20, type: 'number' }, 
   
@@ -43,7 +43,7 @@ export const settings = {
   FORCE_ERRORS: { label: 'Show dummy errors', value: false }, 
 // progress
 
-  PROGRESS_POSITION: list({ label: 'Progress position', value: 0, options: ['Above', 'In title', 'Hidden'] }), 
+  PROGRESS_POSITION: list({ label: 'Progress position', value: 0, options: ['Above', 'In title', 'Hidden'] }),
   PROGRESS_TYPE: list({ label: 'Progress type', value: 0, options: ['Progress indicator', 'Step indicator'] }), 
   PROGRESS_ORIENTATION: list({ label: 'Progress orientation', value: 0, options: ['Vertical', 'Horizontal', 'Mixed: main steps are horizontal', 'Mixed: main steps are vertical'] }), 
   SEPARATE_PAGES_FOR_PROGRESS: list({ label: 'Progress bar sub items', value: 0, options: ['Anchors in page', 'Separate pages'] }), 

@@ -22,16 +22,22 @@ const FormContainer = styled.div`
 const FieldContainer = styled.div`
   width: 100%;
   margin-bottom: ${ p => p.FIELD_GAP || 0 }px;
-  &(:last-child){
+  &:last-child {
     margin-bottom: 0;
   }
 `;
 
 const Column = styled.div`
   margin-right: 10px;
-  &(:last-child) {
+  &:last-child {
     margin-right: 0;
   }
+`;
+
+const Table = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
 `;
 
 export class NormalForm extends React.Component {
@@ -90,27 +96,20 @@ export class NormalForm extends React.Component {
     // }
   }
 
-  createColumns(columns) {
-//     .map(field => this.createField(field))}
-    return (<div style={{display: 'flex'}}>
-      {columns.map(fields => {
-      return (
-        <Column>
-          {fields}
-        </Column>
-      );
-      })}
-      </div>
+  createColumns(style, fields) {
+    return (
+      <Table>
+        {fields}
+      </Table>
     );
   }
 
-  resolveMultiColumn(columns) {
+  resolveMultiColumn(...fields) {
     const { MULTI_COLUMN } = this.props;
-    if (MULTI_COLUMN) {
-      return this.createColumns(columns);
+    if (MULTI_COLUMN !== 'Single') {
+      return this.createColumns(MULTI_COLUMN, fields);
     }
-    const fields = _.flatten(columns);//sections.reduce((current, column) => current.concat(column))
-    return fields; //.map(field => this.createField(field))
+    return fields;
   }
 
   resolveProgressiveDisclosure(preferredOptions) {

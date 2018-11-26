@@ -66,7 +66,7 @@ export class RadioButtonGroup extends React.Component {
       <Container>
         { label ? <Label disabled={disabled}>{label}</Label> : null }
         <List>
-          { options.map(label => <RadioButton label={label} checked={value===label} disabled={disabled} onClick={() => this.toggle(label)} />)}
+          { options.map(label => <RadioButton label={label} checked={value===label} disabled={disabled} onClick={() => this.toggle(label)} key={label} />)}
         </List>
       </Container>
     );

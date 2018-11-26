@@ -95,7 +95,7 @@ export class ToggleSwitch extends React.Component {
     const { disabled, label } = this.props;
     const { checked } = this.state;
     return (
-      <Container checked={checked} onClick={() => this.toggle()} onHover={() => this.onHover()} onBlur={() => this.onBlur()}>
+      <Container checked={checked} onClick={() => this.toggle()} onMouseOver={() => this.onHover()} onBlur={() => this.onBlur()}>
         <ToggleTrack checked={checked} disabled={disabled}>
           <ToggleButton checked={checked} disabled={disabled} />
         </ToggleTrack>
