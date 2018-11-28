@@ -1,6 +1,5 @@
 import * as React from "react";
 import styled from 'styled-components';
-import * as colors from '../../global/Colors';
 import { ReactComponent as Icon } from '../../assets/icons/danger.svg';
 const Container = styled.div`
   width: 16px;

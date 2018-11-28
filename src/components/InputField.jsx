@@ -1,11 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
-// import { IconInfo, IconError, IconSuccess, IconWarning } from './icons';
-import { IconError } from './icons/IconError';
-import { IconWarning } from './icons/IconWarning';
-import { IconInfo } from './icons/IconInfo';
 import * as colors from '../global/Colors';
-
+import { IconInfo } from './icons/IconInfo';
+import { HelperText } from './shared/HelperText';
 const Container = styled.div`
     display: flex;
     align-items: flex-start;
@@ -36,16 +33,6 @@ const LabelContainer = styled.div`
     width: 100%;
     margin-bottom: 5px;
 `;
-const HelperTextContainer = styled.div`
-    display: flex;
-    margin-top: 5px;
-`;
-
-const StatusIcon = styled.div`
-    margin-right: 5px;
-    width: 16px;
-    height: 16px;
-`;
 
 const Input = styled.input`
     /* color: #555; */
@@ -66,11 +53,6 @@ const Placeholder = styled.div`
     top: 50%;
     transform: translate(0, -50%);
     pointer-events: none;
-`;
-
-const HelperText = styled.div`
-    color: ${p => p.statusColor};
-    font-size: 14px;
 `;
 
 const Icon = styled.div`
@@ -156,19 +138,15 @@ export class InputField extends React.Component {
         const { isFocused, value } = this.state;
 
         let statusColor = '#555';
-        let statusIcon = null;
         switch (status) {
             case 'error':
                 statusColor = colors.ERROR;
-                statusIcon = <IconError />;
                 break;
             case 'warning':
                 statusColor = colors.WARNING;
-                statusIcon = null; //<IconWarning />;
                 break;
             case 'success':
                 statusColor = colors.SUCCESS;
-                statusIcon = null; //<IconSuccess />;
                 break;
         }
         return (
@@ -193,10 +171,7 @@ export class InputField extends React.Component {
                     />
                 </Box>
                 {helperText || alwaysShowHelperText ? (
-                    <HelperTextContainer>
-                        {statusIcon ? <StatusIcon>{statusIcon}</StatusIcon> : null}
-                        <HelperText statusColor={statusColor}>{helperText}&nbsp;</HelperText>
-                    </HelperTextContainer>
+                    <HelperText status={status} message={helperText} />
                 ) : null}
             </Container>
         );
