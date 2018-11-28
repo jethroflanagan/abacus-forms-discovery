@@ -30,7 +30,7 @@ export class Button extends React.Component {
   render() {
     const { label, type } = this.props;
     return (
-      <Container type={type}>
+      <Container {...this.props} type={type}>
         {label}
       </Container>
     );

@@ -43,6 +43,7 @@ export class NormalForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      page: 0,
       language: "English (ZA)"
     };
   }
@@ -111,6 +112,43 @@ export class NormalForm extends React.Component {
     );
   }
 
+  // buttons
+  createButtonRow(...buttons) {
+    return buttons.map(({ label, action, type }) => (
+        <Button type={type || 'primary'} label={label || 'Submit'} onClick={action || (() => this.submit())} />
+    ));
+  }
+
+  submit() {
+    console.log('submit');
+  }
+
+  resolveSubmitButtonRow(...buttons) {
+    const { SINGLE_PAGE } = this.props;
+    // TODO: enable adding item if on last page
+    if (!SINGLE_PAGE) return [];
+    return this.createButtonRow(...buttons);
+  }
+
+  // TODO: pass in as ...{ fields, buttonRow }
+  resolvePaging(...pages) {
+    const { SINGLE_PAGE } = this.props;
+    if (SINGLE_PAGE) return _.flatten(pages);
+
+    const { page } = this.state;
+    const fields = pages[page];
+    // return fields;
+    const buttons = [
+    ];
+    if (page > 0) {
+      buttons.push({ label: 'Previous', type: 'tertiary', action: () => this.previousPage() });
+    }
+    if (page + 1 < pages.length) {
+      buttons.push({ label: 'Next', action: () => this.nextPage() });
+    }
+    return [...fields, ...this.createButtonRow(...buttons)];
+  }
+
   resolveMultiColumn(...fields) {
     const { MULTI_COLUMN } = this.props;
     if (MULTI_COLUMN !== 'Single') {
@@ -129,57 +167,46 @@ export class NormalForm extends React.Component {
 //     return this.createField(field);
   }
 
+  nextPage() {
+    this.setState({ page: this.state.page + 1 });
+  }
+
+  previousPage() {
+    this.setState({ page: this.state.page - 1 });
+  }
   render() {
     const styles = {};
     if (this.props.UPSIDE_DOWN) {
       styles.transform = "rotate(180deg)";
     }
 
-//     let sectionPaymentDetails = [
-//       [
-//         { field: InputField, label: 'Beneficiary name', width: '300px' },
-//         { field: InputField, label: 'Bank', width: '240px' },
-//         { field: InputField, label: 'Branch', width: '240px' },     
-//       ],
-//       [
-//         { field: InputField, label: 'Account number', width: '240px' },
-//         { field: InputField, label: 'Account type', width: '240px' },
-//         { field: InputField, label: 'Amount', width: '240px' },
-//       ]
-//     ];
-
-//     let sectionNotices = [
-//       [
-//         { field: InputField, label: 'My reference', width: '240px' },
-//         { field: InputField, label: 'Beneficiary reference', width: '240px' },
-//       ],
-//       [
-//         { field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" },
-//         { field: SegmentedControl, label: 'Send beneficiary a notice of payment by', segments: ["None", "SMS", "Email", "Fax"], value: "None" },
-//       ],
-//     ];
-
     const fields = [
-      this.createField({ field: ProgressIndicator, step: 1, totalSteps: 3 }),
-      this.createField({ field: GroupHeading, label: 'Payment details' }),
-      this.resolveMultiColumn(
-        this.createField({ field: InputField, label: 'Beneficiary name', width: '300px' }),
-        this.createField({ field: InputField, label: 'Bank', width: '200px' }),
-        this.createField({ field: InputField, label: 'Branch', width: '150px' }),
-        this.createField({ field: InputField, label: 'Account number', width: '200px' }),
-        this.createField({ field: InputField, label: 'Account type', width: '200px' }),
-        this.createField({ field: InputField, label: 'Amount', width: '150px' }),
-      ),
-      this.createField({ field: Checkbox, label: 'Immediate Interbank Payment' }),
-      this.createField({ field: GroupHeading, label: 'Notice of payment details' }),
-      this.resolveMultiColumn(
-        this.createField({ field: InputField, label: 'My reference', width: '240px' }),
-        this.createField({ field: InputField, label: 'Beneficiary reference', width: '240px' }),
-        this.createField(this.resolveProgressiveDisclosure({ field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" })),
-        this.createField(this.resolveProgressiveDisclosure({ field: SegmentedControl, label: 'Send beneficiary a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" })),
-      ),
-      <Button type="primary" label="Pay" />
-    ]
+      ...this.resolvePaging([
+        // this.createField({ field: ProgressIndicator, step: 1, totalSteps: 3 }),
+        this.createField({ field: GroupHeading, label: 'Payment details' }),
+        this.resolveMultiColumn(
+          this.createField({ field: InputField, label: 'Beneficiary name', width: '300px' }),
+          this.createField({ field: InputField, label: 'Bank', width: '200px' }),
+          this.createField({ field: InputField, label: 'Branch', width: '150px' }),
+          this.createField({ field: InputField, label: 'Account number', width: '200px' }),
+          this.createField({ field: InputField, label: 'Account type', width: '200px' }),
+          this.createField({ field: InputField, label: 'Amount', width: '150px' }),
+        ),
+        this.createField({ field: Checkbox, label: 'Immediate Interbank Payment' }),
+      ],
+      [
+        this.createField({ field: GroupHeading, label: 'Notice of payment details' }),
+        this.resolveMultiColumn(
+          this.createField({ field: InputField, label: 'My reference', width: '240px' }),
+          this.createField({ field: InputField, label: 'Beneficiary reference', width: '240px' }),
+          this.createField(this.resolveProgressiveDisclosure({ field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" })),
+          this.createField(this.resolveProgressiveDisclosure({ field: SegmentedControl, label: 'Send beneficiary a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" })),
+        ),
+      ]),
+      // <Button type="primary" label="Pay" onClick={() => this.nextPage()} />
+      this.resolveSubmitButtonRow({label: 'Send payment'}),
+    ];
+    console.log(fields);
 
     // let formContent = fields.map(field => this.createField(field))
     const formContent = fields;
