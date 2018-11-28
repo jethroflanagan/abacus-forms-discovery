@@ -38,6 +38,17 @@ const TableColumnLayout = styled(Table)`
   grid-template-rows: repeat(${ p => p.rows}, 1fr);
   grid-auto-flow: column;
 `;
+const ButtonRow = styled.div`
+  display: flex;
+  /* padding: 20px; */
+  justify-content: flex-end;
+  & > * {
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+`;
 
 export class NormalForm extends React.Component {
   constructor(props) {
@@ -114,9 +125,13 @@ export class NormalForm extends React.Component {
 
   // buttons
   createButtonRow(...buttons) {
-    return buttons.map(({ label, action, type }) => (
-        <Button type={type || 'primary'} label={label || 'Submit'} onClick={action || (() => this.submit())} />
-    ));
+    return (
+      <ButtonRow key='button row'>
+        { buttons.map(({ label, action, type }) => (
+          <Button type={type || 'primary'} label={label || 'Submit'} onClick={action || (() => this.submit())} key={label} />
+        ))}
+      </ButtonRow>
+    );
   }
 
   submit() {
@@ -146,7 +161,11 @@ export class NormalForm extends React.Component {
     if (page + 1 < pages.length) {
       buttons.push({ label: 'Next', action: () => this.nextPage() });
     }
-    return [...fields, ...this.createButtonRow(...buttons)];
+    return [
+      this.createField({ field: ProgressIndicator, step: page + 1, totalSteps: pages.length }),
+      ...fields,
+      this.createButtonRow(...buttons)
+    ];
   }
 
   resolveMultiColumn(...fields) {
@@ -203,10 +222,8 @@ export class NormalForm extends React.Component {
           this.createField(this.resolveProgressiveDisclosure({ field: SegmentedControl, label: 'Send beneficiary a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" })),
         ),
       ]),
-      // <Button type="primary" label="Pay" onClick={() => this.nextPage()} />
       this.resolveSubmitButtonRow({label: 'Send payment'}),
     ];
-    console.log(fields);
 
     // let formContent = fields.map(field => this.createField(field))
     const formContent = fields;
