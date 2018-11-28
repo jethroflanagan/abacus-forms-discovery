@@ -9,6 +9,7 @@ import { Checkbox } from "../components/Checkbox";
 import { RadioButtonGroup } from "../components/RadioButtonGroup";
 import { SegmentedControl } from "../components/SegmentedControl";
 import { ProgressIndicator } from "../components/ProgressIndicator";
+import { MinimalProgressIndicator } from "../components/MinimalProgressIndicator";
 import { GroupHeading } from "../components/GroupHeading";
 import * as _ from 'lodash';
 
@@ -86,12 +87,12 @@ export class NormalForm extends React.Component {
     const options = this.getOptions(preferredOptions);
     const Field = preferredOptions.field;
     return (
-      <FieldContainer {...options.container}>
+      <FieldContainer {...options.container} key={preferredOptions.id || preferredOptions.label}>
         <Field {...options.field} />
       </FieldContainer>
     );
     // switch (options.field) {
-    //   case 'Input': 
+    //   case 'Input':
     //     return <InputField {...options} />;
     //   case 'Checkbox':
     //     return <Checkbox {...options} />;
@@ -161,8 +162,16 @@ export class NormalForm extends React.Component {
     if (page + 1 < pages.length) {
       buttons.push({ label: 'Next', action: () => this.nextPage() });
     }
+
+    const { PROGRESS_TYPE } = this.props;
+    const progressBar = {
+      'Progress indicator': { field: ProgressIndicator },
+      'Minimal progress indicator': { field: MinimalProgressIndicator },
+      'Step indicator': { field: ProgressIndicator },
+    }[PROGRESS_TYPE];
+
     return [
-      this.createField({ field: ProgressIndicator, step: page + 1, totalSteps: pages.length }),
+      this.createField({ ...progressBar, step: page + 1, totalSteps: pages.length }),
       ...fields,
       this.createButtonRow(...buttons)
     ];

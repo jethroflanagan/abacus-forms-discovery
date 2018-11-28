@@ -46,7 +46,7 @@ export const settings = {
 // progress
 
   PROGRESS_POSITION: list({ label: 'Progress position', value: 0, options: ['Above', 'In title', 'Hidden'] }),
-  PROGRESS_TYPE: list({ label: 'Progress type', value: 0, options: ['Progress indicator', 'Step indicator'] }), 
+  PROGRESS_TYPE: list({ label: 'Progress type', value: 0, options: ['Progress indicator', 'Minimal progress indicator', 'Step indicator'] }), 
   PROGRESS_ORIENTATION: list({ label: 'Progress orientation', value: 0, options: ['Vertical', 'Horizontal', 'Mixed: main steps are horizontal', 'Mixed: main steps are vertical'] }), 
   SEPARATE_PAGES_FOR_PROGRESS: list({ label: 'Progress bar sub items', value: 0, options: ['Anchors in page', 'Separate pages'] }), 
   

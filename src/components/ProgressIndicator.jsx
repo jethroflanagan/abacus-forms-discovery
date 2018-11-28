@@ -13,7 +13,7 @@ const Container = styled.div`
 const Label = styled.div`
   font-size: 16px;
   margin-bottom: 5px;
-  font-color: ${colors.TEXT_NORMAL};
+  color: ${colors.TEXT_NORMAL};
 `;
 const Track = styled.div`
     display: inline-flex;
