@@ -30,19 +30,19 @@ const list = (config) => ({ ...config, value: config.options[config.value] });
 
 export const settings = {
     // layout
-  FORM_WIDTH: { label: 'Form width', value: 580, type: 'number' },
+  FORM_WIDTH: { label: 'Form width', value: 580, type: 'number', min: 320, max: 1920, step: 1 },
   STRETCH_WIDTH: { label: 'Stretch to fill width', value: false },
   SINGLE_PAGE: { label: 'Single page', value: false },
   USE_GROUPS: { label: 'Group fields', value: true },
   MULTI_COLUMN: list({ label: 'Multiple columns', value: 0, options: ['Single', 'Z-pattern', 'Newspaper columns'] }),
-  COLUMN_GAP: { label: 'Gap between columns', value: 10, type: 'number' },
-  FIELD_GAP: { label: 'Gap between fields', value: 10, type: 'number' },
-  GROUP_GAP: { label: 'Gap between groups', value: 20, type: 'number' },
+  COLUMN_GAP: { label: 'Gap between columns', value: 10, type: 'number', min: 0, max: 50, step: 1 },
+  FIELD_GAP: { label: 'Gap between fields', value: 10, type: 'number', min: 0, max: 50, step: 1 },
+  GROUP_GAP: { label: 'Gap between groups', value: 20, type: 'number', min: 0, max: 50, step: 1 },
 
     // errors
   ERRORS_EXPAND: { label: 'Errors tap to expand', value: true },
-  ERROR_BREATHING_ROOM: { label: 'Errors have breathing room', value: true }, 
-  FORCE_ERRORS: { label: 'Show dummy errors', value: false }, 
+  ERROR_BREATHING_ROOM: { label: 'Errors have breathing room', value: true },
+  FORCE_ERRORS: { label: 'Show dummy errors', value: false },
 // progress
 
   PROGRESS_POSITION: list({ label: 'Progress position', value: 0, options: ['Above', 'In title', 'Bottom'] }),

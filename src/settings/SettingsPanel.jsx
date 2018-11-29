@@ -5,6 +5,7 @@ import { ToggleSwitch } from '../components/ToggleSwitch';
 import { InputField } from '../components/InputField';
 import { RadioButtonGroup } from '../components/RadioButtonGroup';
 import { GroupHeading } from '../components/GroupHeading'
+import { RangeSlider } from '../components/RangeSlider'
 // import {
 //   STRETCH_WIDTH,
 //   SINGLE_PAGE,
@@ -135,7 +136,9 @@ export class SettingsPanel extends React.Component {
 
     createNumberInput(name, options) {
         const value = this.state[name];
-        return <InputField label={settings[name].label} value={value} onUpdateValue={value => this.onUpdateValue(name, value)} fieldWidth='50px' key={name} {...options}/>;
+        options = {...settings[name], ...options};
+        // return <InputField label={settings[name].label} value={value} onUpdateValue={value => this.onUpdateValue(name, value)} fieldWidth='50px' key={name} {...options}/>;
+        return <RangeSlider label={settings[name].label} value={value} onUpdateValue={value => this.onUpdateValue(name, value)} fieldWidth='50px' key={name} {...options} />
     }
 
     createToggle(name, options) {
