@@ -34,20 +34,18 @@ const LabelContainer = styled.div`
     margin-bottom: 5px;
 `;
 
-const Input = styled.input`
+const Input = styled.select`
     /* color: #555; */
     color: ${p => (p.disabled ? '#666' : colors.TEXT_NORMAL)};
     font-size: 16px;
-    border: none;
-    background: transparent;
-    line-height: 40px;
-    width: 100%;
     outline: none;
-    &[type=number]::-webkit-inner-spin-button,
-    &[type=number]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+    top: 0;
+    position: absolute;
+    border: none;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
 `;
 const Placeholder = styled.div`
     color: #888;
@@ -67,7 +65,7 @@ const Icon = styled.div`
     height: 16px;
 `;
 
-export class InputField extends React.Component {
+export class Dropdown extends React.Component {
     // Set default properties
     static defaultProps = {
         label: 'Label',
@@ -76,11 +74,10 @@ export class InputField extends React.Component {
         placeholder: '',
         helperText: '',
         disabled: false,
-        type: 'text',
         infoText: '',
         alwaysShowHelperText: false,
         status: '',
-
+        options: [],
         // size of everything
         width: '250px',
         // size of input
@@ -135,6 +132,7 @@ export class InputField extends React.Component {
             status,
             placeholder,
             type,
+            options,
             infoText,
             width,
             fieldWidth,
@@ -173,7 +171,9 @@ export class InputField extends React.Component {
                         disabled={disabled}
                         onFocus={e => this.onFocus(e)}
                         onBlur={e => this.onBlur(e)}
-                    />
+                    >
+                      { options.map(option => <option value={option} key={option}>{option}</option>) }
+                    </Input>
                 </Box>
                 {helperText || alwaysShowHelperText ? (
                     <HelperText status={status} message={helperText} />

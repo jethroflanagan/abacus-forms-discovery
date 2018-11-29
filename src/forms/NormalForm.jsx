@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Stack } from "../components/Stack";
 import { Button } from "../components/Button";
 import { InputField } from "../components/InputField";
+import { Dropdown } from "../components/Dropdown";
 import { ToggleSwitch } from "../components/ToggleSwitch";
 import { Checkbox } from "../components/Checkbox";
 import { RadioButtonGroup } from "../components/RadioButtonGroup";
@@ -214,11 +215,11 @@ export class NormalForm extends React.Component {
         this.createField({ field: GroupHeading, label: 'Payment details' }),
         this.resolveMultiColumn(
           this.createField({ field: InputField, label: 'Beneficiary name', width: '300px' }),
-          this.createField({ field: InputField, label: 'Bank', width: '200px' }),
+          this.createField({ field: Dropdown, label: 'Bank', width: '200px', options: ['Absa', 'Capitec', 'First National Bank', 'Nedbank', 'Standard Bank'] }),
           this.createField({ field: InputField, label: 'Branch', width: '150px' }),
-          this.createField({ field: InputField, label: 'Account number', width: '200px' }),
+          this.createField({ field: InputField, label: 'Account number', width: '200px', type: 'number' }),
           this.createField({ field: InputField, label: 'Account type', width: '200px' }),
-          this.createField({ field: InputField, label: 'Amount', width: '150px' }),
+          this.createField({ field: InputField, label: 'Amount', width: '150px', type: 'number' }),
         ),
         this.createField({ field: Checkbox, label: 'Immediate Interbank Payment' }),
       ],
