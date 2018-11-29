@@ -11,14 +11,16 @@ const Container = styled.div`
 
 const List = styled.div`
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
+    flex-direction: column;
     flex-wrap: wrap;
     & > * {
-      margin-right: 30px;
+      /* margin-right: 30px; */
       margin-bottom: 5px;
       &:last-child {
-        margin-right: 0;
+        /* margin-right: 0; */
+        margin-bottom: 0;
       }
     }
 `;

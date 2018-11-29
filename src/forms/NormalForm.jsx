@@ -11,6 +11,8 @@ import { SegmentedControl } from "../components/SegmentedControl";
 import { ProgressIndicator } from "../components/ProgressIndicator";
 import { MinimalProgressIndicator } from "../components/MinimalProgressIndicator";
 import { GroupHeading } from "../components/GroupHeading";
+import { ThankYou } from './ThankYou';
+
 import * as _ from 'lodash';
 
 // import "./styles.css";
@@ -56,7 +58,8 @@ export class NormalForm extends React.Component {
     super(props);
     this.state = {
       page: 0,
-      language: "English (ZA)"
+      language: "English (ZA)",
+      isComplete: false,
     };
   }
   onUpdateLanguage(language) {
@@ -137,19 +140,18 @@ export class NormalForm extends React.Component {
 
   submit() {
     console.log('submit');
-  }
-
-  resolveSubmitButtonRow(...buttons) {
-    const { SINGLE_PAGE } = this.props;
-    // TODO: enable adding item if on last page
-    if (!SINGLE_PAGE) return [];
-    return this.createButtonRow(...buttons);
+    this.setState({ isComplete: true });
   }
 
   // TODO: pass in as ...{ fields, buttonRow }
   resolvePaging(...pages) {
     const { SINGLE_PAGE } = this.props;
-    if (SINGLE_PAGE) return _.flatten(pages);
+
+    const submitButton = { label: 'Send', action: () => this.submit() };
+
+    if (SINGLE_PAGE) {
+      return _.flatten([...pages, this.createButtonRow(submitButton)]);
+    }
 
     const { page } = this.state;
     const fields = pages[page];
@@ -161,6 +163,9 @@ export class NormalForm extends React.Component {
     }
     if (page + 1 < pages.length) {
       buttons.push({ label: 'Next', action: () => this.nextPage() });
+    }
+    if (page + 1 === pages.length) {
+      buttons.push(submitButton);
     }
 
     const { PROGRESS_TYPE } = this.props;
@@ -202,7 +207,14 @@ export class NormalForm extends React.Component {
   previousPage() {
     this.setState({ page: this.state.page - 1 });
   }
+
+  reset() {
+    this.setState({ page: 0 });
+    this.setState({ isComplete: false });
+  }
+
   render() {
+    const { isComplete } = this.state;
     const styles = {};
     if (this.props.UPSIDE_DOWN) {
       styles.transform = "rotate(180deg)";
@@ -231,11 +243,10 @@ export class NormalForm extends React.Component {
           this.createField(this.resolveProgressiveDisclosure({ field: SegmentedControl, label: 'Send beneficiary a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" })),
         ),
       ]),
-      this.resolveSubmitButtonRow({label: 'Send payment'}),
     ];
 
     // let formContent = fields.map(field => this.createField(field))
-    const formContent = fields;
+    const formContent = isComplete ? <ThankYou reset={() => this.reset()}/> : fields;
 
     return (
       <FormContainer width={this.props.FORM_WIDTH}>

@@ -45,16 +45,16 @@ export const settings = {
   FORCE_ERRORS: { label: 'Show dummy errors', value: false }, 
 // progress
 
-  PROGRESS_POSITION: list({ label: 'Progress position', value: 0, options: ['Above', 'In title', 'Hidden'] }),
-  PROGRESS_TYPE: list({ label: 'Progress type', value: 0, options: ['Progress indicator', 'Minimal progress indicator', 'Step indicator'] }), 
-  PROGRESS_ORIENTATION: list({ label: 'Progress orientation', value: 0, options: ['Vertical', 'Horizontal', 'Mixed: main steps are horizontal', 'Mixed: main steps are vertical'] }), 
+  PROGRESS_POSITION: list({ label: 'Progress position', value: 0, options: ['Above', 'In title', 'Bottom'] }),
+  PROGRESS_TYPE: list({ label: 'Progress type', value: 0, options: ['Progress indicator', 'Minimal progress indicator', 'Step indicator', 'None'] }),
+  PROGRESS_ORIENTATION: list({ label: 'Progress orientation', value: 0, options: ['Vertical', 'Horizontal', 'Mixed: main steps are horizontal', 'Mixed: main steps are vertical'] }),
   SEPARATE_PAGES_FOR_PROGRESS: list({ label: 'Progress bar sub items', value: 0, options: ['Anchors in page', 'Separate pages'] }), 
   
     // flow
 
-  SHOW_SUMMARY: { label: 'Show summary / confirmation page', value: true }, 
+  SHOW_SUMMARY: { label: 'Show summary page', value: true },
   TYPEFORM: { label: 'Typeform mode', value: false }, 
-  HIDDEN_FIELDS: list({ label: 'Hidden fields', value: 0, options: ['None (show as disabled)', 'Allow'] }), 
+  HIDDEN_FIELDS: list({ label: 'Hidden fields', value: 0, options: ['None (show as disabled)', 'Allow'] }),
   PROGRESSIVE_DISCLOSURE: list({ label: 'Progressive disclosure type', value: 0, options: ['Radio', 'Segmented Control', 'Tabbed Radio header jam'] }), 
   INLINE_HELP: list({ label: 'Inline help', value: 0, options: ['As helper text', 'As tooltip'] }),
   UPSIDE_DOWN: { label: 'Demogorgon', value: false },
