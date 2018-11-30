@@ -31,7 +31,7 @@ import { settings } from './Settings';
 const Container = styled.div`
     background: #efefef;
     display: flex;
-    max-width: 400px;
+    /* max-width: 300px; */
     min-height: 100%;
     align-items: flex-start;
     justify-content: flex-start;
@@ -45,7 +45,7 @@ const Container = styled.div`
 const Content = styled.div`
     padding: 20px;
     padding-top: 0;
-    max-width: 400px;
+    /* max-width: 400px; */
     & > * {
         margin-bottom: 10px;
     }

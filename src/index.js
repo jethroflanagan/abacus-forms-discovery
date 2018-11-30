@@ -95,7 +95,7 @@ class App extends React.Component {
                   </MenuContainer>
                   <NormalForm {...this.state}/>
                 </ScrollContainer>
-                { isSettingsVisible ? <ScrollContainer><SettingsPanel settings={this.state} updateSetting={(name, value) => this.updateSetting(name, value)} /></ScrollContainer> : null }
+                { isSettingsVisible ? <ScrollContainer style={{ minWidth: '320px'}}><SettingsPanel settings={this.state} updateSetting={(name, value) => this.updateSetting(name, value)} /></ScrollContainer> : null }
             </AppContainer>
         );
     }
