@@ -29,6 +29,8 @@ import * as _ from 'lodash';
 const list = (config) => ({ ...config, value: config.options[config.value] });
 
 export const settings = {
+  FORM: list({ label: '', value: 0, options: ['Connected Banking', 'DSP'] }),
+
     // layout
   FORM_WIDTH: { label: 'Form width', value: 580, type: 'number', min: 320, max: 1920, step: 1 },
   STRETCH_WIDTH: { label: 'Stretch to fill width', value: false },

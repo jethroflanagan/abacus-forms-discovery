@@ -18,8 +18,8 @@ const Box = styled.div`
     border-radius: 5px;
     width: 100%;
     height: 40px;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    align-items: center;
     padding: 0 5px;
 `;
 
@@ -40,7 +40,7 @@ const Input = styled.input`
     font-size: 16px;
     border: none;
     background: transparent;
-    line-height: 40px;
+    height: 100%;
     width: 100%;
     outline: none;
     &[type=number]::-webkit-inner-spin-button,
@@ -50,14 +50,15 @@ const Input = styled.input`
     }
 `;
 const Placeholder = styled.div`
-    color: #888;
+    color: ${colors.TEXT_PLACEHOLDER};
     font-size: 16px;
     font-style: italic;
-    position: absolute;
-    left: 5px;
-    top: 50%;
-    transform: translate(0, -50%);
-    pointer-events: none;
+    transform: translateY(1px); //* weird */
+`;
+const Currency = styled.div`
+    color: ${colors.TEXT_NORMAL};
+    font-size: 16px;
+    transform: translateY(1px); //* weird */
 `;
 
 const Icon = styled.div`
@@ -165,9 +166,10 @@ export class InputField extends React.Component {
                     ) : null}
                 </LabelContainer>
                 <Box disabled={disabled} isFocused={isFocused} statusColor={statusColor} style={{ width: fieldWidth }}>
+                    { type === 'currency' ? <Currency>R</Currency> : null }
                     {value.length ? null : <Placeholder>{placeholder}</Placeholder>}
                     <Input
-                        type={type}
+                        type={type ==='currency' ? 'number' : type}
                         onChange={e => this.onChange(e)}
                         value={value}
                         disabled={disabled}

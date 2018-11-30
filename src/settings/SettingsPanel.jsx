@@ -6,6 +6,7 @@ import { InputField } from '../components/InputField';
 import { RadioButtonGroup } from '../components/RadioButtonGroup';
 import { GroupHeading } from '../components/GroupHeading'
 import { RangeSlider } from '../components/RangeSlider'
+import { Dropdown } from '../components/Dropdown'
 
 import { settings } from './Settings';
 
@@ -90,6 +91,11 @@ export class SettingsPanel extends React.Component {
         return <RadioButtonGroup label={settings[name].label} options={settings[name].options} value={value} onUpdateValue={value => this.onUpdateValue(name, value)} key={name} {...options}/>;
     }
 
+    createDropdown(name, options = {}) {
+        const value = this.state[name];
+        return <Dropdown label={settings[name].label} options={settings[name].options} value={value} onUpdateValue={value => this.onUpdateValue(name, value)} key={name} {...options}/>;
+    }
+
     createNumberInput(name, options) {
         const value = this.state[name];
         options = {...settings[name], ...options};
@@ -111,34 +117,37 @@ export class SettingsPanel extends React.Component {
         const label = (name, options) => this.createLabel(name, options);
         const number = (name, options) => this.createNumberInput(name, options);
         const list = (name, options) => this.createListInput(name, options);
+        const dropdown = (name, options) => this.createDropdown(name, options);
 
         const disableForSinglePage = SINGLE_PAGE ? { disabled: true } : null;
         const disableForSingleColumn = MULTI_COLUMN === 'Single' ? { disabled: true } : null;
         const options = [
-            label('Layout'),
-            number('FORM_WIDTH'),
-            toggle('STRETCH_WIDTH'),
-            toggle('USE_GROUPS'),
-            list('MULTI_COLUMN'),
-            number('COLUMN_GAP', disableForSingleColumn),
-            number('FIELD_GAP'),
-            number('GROUP_GAP'),
-            label('Progress'),
-            toggle('SINGLE_PAGE'),
-            list('PROGRESS_POSITION', disableForSinglePage),
-            list('PROGRESS_TYPE', disableForSinglePage),
-            // list('PROGRESS_ORIENTATION', disableForSinglePage),
-            list('SEPARATE_PAGES_FOR_PROGRESS', disableForSinglePage),
-            label('Errors'),
-            toggle('ERROR_BREATHING_ROOM'),
-            toggle('ERRORS_EXPAND'),
-            toggle('FORCE_ERRORS'),
-            label('Flow'),
-            toggle('SHOW_SUMMARY'),
-            toggle('TYPEFORM'),
-            list('PROGRESSIVE_DISCLOSURE'),
-            list('INLINE_HELP'),
-            toggle('UPSIDE_DOWN'),
+          label('Form'),
+          dropdown('FORM'),
+          label('Layout'),
+          number('FORM_WIDTH'),
+          toggle('STRETCH_WIDTH'),
+          toggle('USE_GROUPS'),
+          list('MULTI_COLUMN'),
+          number('COLUMN_GAP', disableForSingleColumn),
+          number('FIELD_GAP'),
+          number('GROUP_GAP'),
+          label('Progress'),
+          toggle('SINGLE_PAGE'),
+          list('PROGRESS_POSITION', disableForSinglePage),
+          list('PROGRESS_TYPE', disableForSinglePage),
+          // list('PROGRESS_ORIENTATION', disableForSinglePage),
+          list('SEPARATE_PAGES_FOR_PROGRESS', disableForSinglePage),
+          label('Errors'),
+          toggle('ERROR_BREATHING_ROOM'),
+          toggle('ERRORS_EXPAND'),
+          toggle('FORCE_ERRORS'),
+          label('Flow'),
+          toggle('SHOW_SUMMARY'),
+          toggle('TYPEFORM'),
+          list('PROGRESSIVE_DISCLOSURE'),
+          list('INLINE_HELP'),
+          toggle('UPSIDE_DOWN'),
         ];
         return (
             <Container>

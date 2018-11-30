@@ -4,3 +4,4 @@ export const ERROR = '#cc3333';
 export const SUCCESS = '#59bf75';
 export const TEXT_NORMAL = '#555';
 export const TEXT_DISABLED = '#CCC';
+export const TEXT_PLACEHOLDER = '#888';

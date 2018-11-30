@@ -19,8 +19,10 @@ import * as _ from 'lodash';
 // import "./styles.css";
 
 const FormContainer = styled.div`
-  width: ${ p => p.width + 'px' || '100%' };
+  width: 100%;
   padding: 20px;
+  display: flex;
+  justify-content: center;
 `;
 
 const FieldContainer = styled.div`
@@ -218,7 +220,9 @@ export class NormalForm extends React.Component {
 
   render() {
     const { isComplete } = this.state;
-    const styles = {};
+    const styles = {
+      width: `${this.props.FORM_WIDTH}px`,
+    };
     if (this.props.UPSIDE_DOWN) {
       styles.transform = "rotate(180deg)";
     }
@@ -251,7 +255,7 @@ export class NormalForm extends React.Component {
           asField({ field: InputField, label: 'Branch', width: '150px' }),
           asField({ field: InputField, label: 'Account number', width: '200px', type: 'number' }),
           asField({ field: Dropdown, label: 'Account type', width: '200px', options: ['Cheque', 'Savings'] }),
-          asField({ field: InputField, label: 'Amount', width: '150px', type: 'number' }),
+          asField({ field: InputField, label: 'Amount', width: '150px', type: 'currency' }),
         ),
         asField({ field: Checkbox, label: 'Immediate Interbank Payment', helperText: ({ checked }) => checked ? 'You have selected to pay a beneficiary at another bank. IIP is more expensive but if you choose to make an IIP the payment will be cleared immediately.' : '' }),
       ],
@@ -272,9 +276,8 @@ export class NormalForm extends React.Component {
     ];
 
     const formContent = isComplete ? <ThankYou reset={() => this.reset()}/> : fields;
-
     return (
-      <FormContainer width={this.props.FORM_WIDTH}>
+      <FormContainer>
         <Stack style={styles}>
           {formContent}
         </Stack>
