@@ -6,25 +6,6 @@ import { InputField } from '../components/InputField';
 import { RadioButtonGroup } from '../components/RadioButtonGroup';
 import { GroupHeading } from '../components/GroupHeading'
 import { RangeSlider } from '../components/RangeSlider'
-// import {
-//   STRETCH_WIDTH,
-//   SINGLE_PAGE,
-//   FORCE_ERRORS,
-//   ERROR_BREATHING_ROOM,
-//   USE_GROUPS,
-//   MULTI_COLUMN,
-//   FIELD_GAP,
-//   GROUP_GAP,
-//   ERRORS_EXPAND,
-//   PROGRESS_POSITION,
-//   PROGRESS_TYPE,
-//   SEPARATE_PAGES_FOR_PROGRESS,
-//   PROGRESS_ORIENTATION,
-//   INLINE_HELP,
-//   SHOW_SUMMARY,
-//   TYPEFORM,
-//   PROGRESSIVE_DISCLOSURE,
-// } from './Settings';
 
 import { settings } from './Settings';
 
@@ -146,7 +127,7 @@ export class SettingsPanel extends React.Component {
             toggle('SINGLE_PAGE'),
             list('PROGRESS_POSITION', disableForSinglePage),
             list('PROGRESS_TYPE', disableForSinglePage),
-            list('PROGRESS_ORIENTATION', disableForSinglePage),
+            // list('PROGRESS_ORIENTATION', disableForSinglePage),
             list('SEPARATE_PAGES_FOR_PROGRESS', disableForSinglePage),
             label('Errors'),
             toggle('ERROR_BREATHING_ROOM'),

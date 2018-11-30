@@ -59,7 +59,7 @@ const Content = styled.div`
 const Tab = styled.div`
 `;
 
-export class SegmentedControl extends React.Component {
+export class SegmentedControl extends React.PureComponent {
   static defaultProps = {
     options: [
       'Segment 1',
@@ -78,9 +78,8 @@ export class SegmentedControl extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { numSegments, active, label } = this.props;
-
-    if (active === prevProps.active) return;
+    const { active } = this.props;
+    if (active === prevProps.active) return false;
 
     let value = parseInt(active);
 
@@ -111,7 +110,6 @@ export class SegmentedControl extends React.Component {
     if (!isNaN(active) && options.length && tabs && Object.keys(tabs).length) {
       activeSegmentName = !isNaN(active) ? options[active] : '';
       activeTab = Object.hasOwnProperty.call(tabs, activeSegmentName) ? tabs[activeSegmentName] : null;
-      console.log(activeSegmentName, activeTab);
     }
     return (
       <Container>

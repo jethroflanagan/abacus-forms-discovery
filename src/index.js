@@ -69,6 +69,7 @@ class App extends React.Component {
         });
         this.state = {
           ...settingValues,
+          isSettingsVisible: true,
         };
         console.log (this.state);
     }

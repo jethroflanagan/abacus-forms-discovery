@@ -2,8 +2,14 @@ import * as React from "react";
 import styled from 'styled-components';
 import { ReactComponent as Tick } from '../assets/icons/tick.svg';
 import * as colors from '../global/Colors';
+import { HelperText } from './shared/HelperText';
 
 const Container = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+`;
+const Field = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -46,6 +52,9 @@ export class Checkbox extends React.Component {
         checked: true,
         height: 23,
         width: 200,
+        helperText: '',
+        status: '',
+        alwaysShowHelperText: false,
     }
 
     constructor(props) {
@@ -70,17 +79,27 @@ export class Checkbox extends React.Component {
     }
 
     render() {
-        const { disabled, label } = this.props;
+        const { disabled, label, helperText, alwaysShowHelperText, status } = this.props;
         const { checked } = this.state;
+        let helperTextMessage = helperText;
+        if (typeof(helperTextMessage) === 'function') {
+          helperTextMessage = helperText(this.state);
+        }
         return (
-            <Container {...this.props} onClick={() => this.toggle()}>
+          <Container>
+            <Field {...this.props} onClick={() => this.toggle()}>
                 <Radio checked={checked} disabled={disabled}>
                   <RadioSignal checked={checked} disabled={disabled} >
                     <Tick />
                   </RadioSignal>
                 </Radio>
                 <Label>{label}</Label>
-            </Container>
+
+            </Field>
+            {helperText || alwaysShowHelperText ? (
+                <HelperText status={status} message={helperTextMessage} />
+            ) : null}
+          </Container>
         );
     }
 }

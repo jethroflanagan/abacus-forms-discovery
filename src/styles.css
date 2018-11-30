@@ -8,5 +8,5 @@ html, body {
 
 * {
   box-sizing: border-box;
-  transition: all .2s ease-out;
+  transition: all .3s ease-in-out;
 }

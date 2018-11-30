@@ -61,6 +61,7 @@ export class NormalForm extends React.Component {
       page: 0,
       language: "English (ZA)",
       isComplete: false,
+      formValues: {},
     };
   }
   onUpdateLanguage(language) {
@@ -69,8 +70,17 @@ export class NormalForm extends React.Component {
     });
   }
 
+  onUpdateValue(id, value) {
+    this.setState({
+      formValues: {
+        ...this.state.formValues,
+        [id]: value,
+      },
+    });
+  }
+
   getOptions(preferred) {
-    const { 
+    const {
       STRETCH_WIDTH,
       ERROR_BREATHING_ROOM,
       FIELD_GAP,
@@ -90,26 +100,13 @@ export class NormalForm extends React.Component {
   createField(preferredOptions) {
     const options = this.getOptions(preferredOptions);
     const Field = preferredOptions.field;
+    const idPrefix = preferredOptions.idPrefix ? preferredOptions.idPrefix : '';
+    const id = idPrefix + (preferredOptions.id || preferredOptions.label);
     return (
-      <FieldContainer {...options.container} key={preferredOptions.id || preferredOptions.label}>
-        <Field {...options.field} />
+      <FieldContainer {...options.container} key={id} >
+        <Field {...options.field} onUpdateValue={(value) => this.onUpdateValue(id, value)} value={this.state.formValues[id]} />
       </FieldContainer>
     );
-    // switch (options.field) {
-    //   case 'Input':
-    //     return <InputField {...options} />;
-    //   case 'Checkbox':
-    //     return <Checkbox {...options} />;
-    //   case 'Radio':
-    //     return <RadioButtonGroup {...options} />;
-    //   case 'ToggleSwitch':
-    //     return <RadioButtonGroup {...options} />;
-    //   case 'SegmentedControl':
-    //     return <SegmentedControl {...options} />;
-    //   default:
-    //     console.warn('not found');
-    //     return null;
-    // }
   }
 
   createColumns(direction, fields) {
@@ -170,14 +167,17 @@ export class NormalForm extends React.Component {
     }
 
     const { PROGRESS_TYPE } = this.props;
-    const progressBar = {
+    const progressBarOptions = {
       'Progress indicator': { field: ProgressIndicator },
       'Minimal progress indicator': { field: MinimalProgressIndicator },
       'Step indicator': { field: ProgressIndicator },
+      'None': null,
     }[PROGRESS_TYPE];
-
+    const progressBar = progressBarOptions
+      ? this.createField({ ...progressBarOptions, step: page + 1, totalSteps: pages.length })
+      : null;
     return [
-      this.createField({ ...progressBar, step: page + 1, totalSteps: pages.length }),
+      progressBar,
       ...fields,
       this.createButtonRow(...buttons)
     ];
@@ -198,7 +198,6 @@ export class NormalForm extends React.Component {
       'Segmented Control': { ...preferredOptions, field: SegmentedControl },
     }[PROGRESSIVE_DISCLOSURE];
     return field;
-//     return this.createField(field);
   }
 
   nextPage() {
@@ -210,8 +209,11 @@ export class NormalForm extends React.Component {
   }
 
   reset() {
-    this.setState({ page: 0 });
-    this.setState({ isComplete: false });
+    this.setState({
+      page: 0,
+      formValues: {},
+      isComplete: false,
+    });
   }
 
   render() {
@@ -226,19 +228,19 @@ export class NormalForm extends React.Component {
     const asColumns = (...args) => this.resolveMultiColumn(...args);
     const asDisclosure = (...args) => this.resolveProgressiveDisclosure(...args);
 
-    const sendMeNotice = {
+    const createSendNotice = (idPrefix) => ({
       'None': null,
       'SMS': [
-        asField({ field: InputField, label: 'Cellphone number' }),
+        asField({ field: InputField, idPrefix, label: 'Cellphone number' }),
       ],
       'Email': [
-        asField({ field: InputField, label: 'Name', placeholder: 'Beneficiary' }),
-        asField({ field: InputField, label: 'Email', placeholder: 'e.g. beneficiary@email.com' }),
+        asField({ field: InputField, idPrefix, label: 'Name', placeholder: 'Beneficiary' }),
+        asField({ field: InputField, idPrefix, label: 'Email', placeholder: 'e.g. beneficiary@email.com' }),
       ],
       'Fax': [
-        asField({ field: InputField, label: 'Fax number' }),
+        asField({ field: InputField, idPrefix, label: 'Fax number' }),
       ],
-    };
+    });
 
     const fields = [
       ...asPages([
@@ -248,10 +250,10 @@ export class NormalForm extends React.Component {
           asField({ field: Dropdown, label: 'Bank', width: '200px', options: ['Absa', 'Capitec', 'First National Bank', 'Nedbank', 'Standard Bank'] }),
           asField({ field: InputField, label: 'Branch', width: '150px' }),
           asField({ field: InputField, label: 'Account number', width: '200px', type: 'number' }),
-          asField({ field: InputField, label: 'Account type', width: '200px' }),
+          asField({ field: Dropdown, label: 'Account type', width: '200px', options: ['Cheque', 'Savings'] }),
           asField({ field: InputField, label: 'Amount', width: '150px', type: 'number' }),
         ),
-        asField({ field: Checkbox, label: 'Immediate Interbank Payment' }),
+        asField({ field: Checkbox, label: 'Immediate Interbank Payment', helperText: ({ checked }) => checked ? 'You have selected to pay a beneficiary at another bank. IIP is more expensive but if you choose to make an IIP the payment will be cleared immediately.' : '' }),
       ],
 
       [
@@ -260,10 +262,10 @@ export class NormalForm extends React.Component {
           asField({ field: InputField, label: 'My reference', width: '240px' }),
           asField({ field: InputField, label: 'Beneficiary reference', width: '240px' }),
           asField(
-            asDisclosure({ field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], active: 0, tabs: sendMeNotice })
+            asDisclosure({ field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], active: 0, tabs: createSendNotice('send me') })
           ),
           asField(
-            asDisclosure({ field: SegmentedControl, label: 'Send beneficiary a notice of payment by', options: ["None", "SMS", "Email", "Fax"], active: 0, tabs: sendMeNotice })
+            asDisclosure({ field: SegmentedControl, label: 'Send beneficiary a notice of payment by', options: ["None", "SMS", "Email", "Fax"], active: 0, tabs: createSendNotice('send beneficiary') })
           ),
         ),
       ]),
