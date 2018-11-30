@@ -29,12 +29,14 @@ import { RangeSlider } from '../components/RangeSlider'
 import { settings } from './Settings';
 
 const Container = styled.div`
-    background: ${ p => p.isOpen ? '#efefef' : 'transparent' };
+    background: #efefef;
     display: flex;
     max-width: 400px;
+    min-height: 100%;
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
+    border-left: 1px solid #ddd;
     & > * {
         margin-bottom: 10px;
     }
@@ -60,32 +62,6 @@ const GroupLabel = styled.div`
     }
 `;
 
-const MenuToggle = styled.div`
-    display: inline-flex;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    background: #fff;
-    padding: 0 10px;
-    cursor: pointer;
-`;
-
-const MenuIcon = styled.div`
-    display: inline-block;
-    width: 100%;
-    height: 14px;
-    border-top: 2px #333 solid;
-    border-bottom: 2px #333 solid;
-    &:after {
-        content: '';
-        display: block;
-        background: #333;
-        margin-top: 4px;
-        width: 100%;
-        height: 2px;
-    }
-`;
-
 const Heading = styled.div`
     font-size: 24px;
     text-align: left;
@@ -108,7 +84,6 @@ export class SettingsPanel extends React.Component {
         console.log(props);
         this.state = {
             ...props.settings,
-            isOpen: true,
         };
     }
 
@@ -146,15 +121,8 @@ export class SettingsPanel extends React.Component {
         return <ToggleSwitch label={settings[name].label} checked={value} onUpdateValue={value => this.onUpdateValue(name, value)} key={name} {...options}/>;
     }
 
-    toggleVisibility() {
-        this.setState({
-            isOpen: !this.state.isOpen,
-        })
-    }
-
     render() {
         const {
-          isOpen,
           SINGLE_PAGE,
           MULTI_COLUMN,
         } = this.state;
@@ -192,18 +160,13 @@ export class SettingsPanel extends React.Component {
             toggle('UPSIDE_DOWN'),
         ];
         return (
-            <Container isOpen={isOpen}>
+            <Container>
                 <Top>
-                    { isOpen ? <Heading>Settings</Heading> : null }
-                    <MenuToggle onClick={()=>this.toggleVisibility()}>
-                        <MenuIcon />
-                    </MenuToggle>
+                   <Heading>Settings</Heading>
                 </Top>
-                { isOpen ? (
-                    <Content>
-                        {options}
-                    </Content>
-                ): null }
+                  <Content>
+                      {options}
+                  </Content>
             </Container>
         );
     }

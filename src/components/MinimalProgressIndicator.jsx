@@ -5,7 +5,7 @@ import * as colors from '../global/Colors';
 
 const Track = styled.div`
   display: flex;
-  height: 2px;
+  height: 4px;
   width: 100%;
   position: absolute;
   top: 0;

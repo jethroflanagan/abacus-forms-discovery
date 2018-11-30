@@ -221,32 +221,54 @@ export class NormalForm extends React.Component {
       styles.transform = "rotate(180deg)";
     }
 
-    const fields = [
-      ...this.resolvePaging([
-        // this.createField({ field: ProgressIndicator, step: 1, totalSteps: 3 }),
-        this.createField({ field: GroupHeading, label: 'Payment details' }),
-        this.resolveMultiColumn(
-          this.createField({ field: InputField, label: 'Beneficiary name', width: '300px' }),
-          this.createField({ field: Dropdown, label: 'Bank', width: '200px', options: ['Absa', 'Capitec', 'First National Bank', 'Nedbank', 'Standard Bank'] }),
-          this.createField({ field: InputField, label: 'Branch', width: '150px' }),
-          this.createField({ field: InputField, label: 'Account number', width: '200px', type: 'number' }),
-          this.createField({ field: InputField, label: 'Account type', width: '200px' }),
-          this.createField({ field: InputField, label: 'Amount', width: '150px', type: 'number' }),
-        ),
-        this.createField({ field: Checkbox, label: 'Immediate Interbank Payment' }),
+    const asField = (...args) => this.createField(...args);
+    const asPages = (...args) => this.resolvePaging(...args);
+    const asColumns = (...args) => this.resolveMultiColumn(...args);
+    const asDisclosure = (...args) => this.resolveProgressiveDisclosure(...args);
+
+    const sendMeNotice = {
+      'None': null,
+      'SMS': [
+        asField({ field: InputField, label: 'Cellphone number' }),
       ],
+      'Email': [
+        asField({ field: InputField, label: 'Name', placeholder: 'Beneficiary' }),
+        asField({ field: InputField, label: 'Email', placeholder: 'e.g. beneficiary@email.com' }),
+      ],
+      'Fax': [
+        asField({ field: InputField, label: 'Fax number' }),
+      ],
+    };
+
+    const fields = [
+      ...asPages([
+        asField({ field: GroupHeading, label: 'Payment details' }),
+        asColumns(
+          asField({ field: InputField, label: 'Beneficiary name', width: '300px' }),
+          asField({ field: Dropdown, label: 'Bank', width: '200px', options: ['Absa', 'Capitec', 'First National Bank', 'Nedbank', 'Standard Bank'] }),
+          asField({ field: InputField, label: 'Branch', width: '150px' }),
+          asField({ field: InputField, label: 'Account number', width: '200px', type: 'number' }),
+          asField({ field: InputField, label: 'Account type', width: '200px' }),
+          asField({ field: InputField, label: 'Amount', width: '150px', type: 'number' }),
+        ),
+        asField({ field: Checkbox, label: 'Immediate Interbank Payment' }),
+      ],
+
       [
-        this.createField({ field: GroupHeading, label: 'Notice of payment details' }),
-        this.resolveMultiColumn(
-          this.createField({ field: InputField, label: 'My reference', width: '240px' }),
-          this.createField({ field: InputField, label: 'Beneficiary reference', width: '240px' }),
-          this.createField(this.resolveProgressiveDisclosure({ field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" })),
-          this.createField(this.resolveProgressiveDisclosure({ field: SegmentedControl, label: 'Send beneficiary a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" })),
+        asField({ field: GroupHeading, label: 'Notice of payment details' }),
+        asColumns(
+          asField({ field: InputField, label: 'My reference', width: '240px' }),
+          asField({ field: InputField, label: 'Beneficiary reference', width: '240px' }),
+          asField(
+            asDisclosure({ field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], active: 0, tabs: sendMeNotice })
+          ),
+          asField(
+            asDisclosure({ field: SegmentedControl, label: 'Send beneficiary a notice of payment by', options: ["None", "SMS", "Email", "Fax"], active: 0, tabs: sendMeNotice })
+          ),
         ),
       ]),
     ];
 
-    // let formContent = fields.map(field => this.createField(field))
     const formContent = isComplete ? <ThankYou reset={() => this.reset()}/> : fields;
 
     return (
@@ -256,60 +278,5 @@ export class NormalForm extends React.Component {
         </Stack>
       </FormContainer>
     );
-
-    // const fields = [
-    //   { field: ProgressIndicator, step: 1, totalSteps: 3 },
-    //   { field: GroupHeading, label: 'Payment details' },
-    //   { field: InputField, label: 'Beneficiary name', width: '300px' },
-    //   { field: InputField, label: 'Bank', width: '240px' },
-    //   { field: InputField, label: 'Branch', width: '240px' },
-    //   { field: InputField, label: 'Account number', width: '240px' },
-    //   { field: InputField, label: 'Account type', width: '240px' },
-    //   { field: InputField, label: 'Amount', width: '240px' },
-    //   { field: Checkbox, label: 'Immediate Interbank Payment ' },
-    //   { field: GroupHeading, label: 'Notice of payment details' },
-    //   { field: InputField, label: 'My reference', width: '240px' },
-    //   { field: InputField, label: 'Beneficiary reference', width: '240px' },
-    //   { field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: "None" },
-    //   { field: SegmentedControl, label: 'Send beneficiary a notice of payment by', segments: ["None", "SMS", "Email", "Fax"], value: "None" },
-    //   // { field: SegmentedControl, segments: ['Hello', 'Goodbye'], value: 'Hello' },
-    // ];
-
-    // return (
-    //   <FormContainer style={styles}>
-    //     <Stack>
-    //       { fields.map(field => this.createField(field)) }
-    //     </Stack>
-    //   </FormContainer>
-    // );
-
-    // return (
-    //   <FormContainer style={styles}>
-    //     <Stack>
-    //       <Heading>Payment details</Heading>
-    //       <RadioButtonGroup
-    //         label="Language"
-    //         options={["English (ZA)", "English (AU)", "Afrikaans"]}
-    //         value="English (ZA)"
-    //         onUpdateValue={v => this.onUpdateLanguage(v)}
-    //       />
-    //       <InputField label="Beneficiary name" {...this.getOptions({width: '240px'})} />
-    //       <InputField label="Bank" />
-    //       <InputField label="Branch" />
-    //       <InputField label="Account number" />
-    //       <InputField label="Account type" />
-    //       <InputField label="Amount" />
-    //       <Checkbox />
-
-    //       <ToggleSwitch />
-    //       <SegmentedControl />
-    //       <RadioButtonGroup
-    //         options={["Yes", "Ask later", "Never"]}
-    //         value="Yes"
-    //       />
-    //       <ProgressIndicator step={1} totalSteps={3} />
-    //     </Stack>
-    //   </FormContainer>
-    // );
   }
 }

@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from 'styled-components';
 import * as colors from '../global/Colors';
+import * as _ from 'lodash';
 
 const Container = styled.div`
     display: flex;
@@ -51,6 +52,13 @@ const Label = styled.div`
     text-align: left;
 `;
 
+const Content = styled.div`
+  margin-top: 10px;
+`;
+
+const Tab = styled.div`
+`;
+
 export class SegmentedControl extends React.Component {
   static defaultProps = {
     options: [
@@ -58,6 +66,7 @@ export class SegmentedControl extends React.Component {
       'Segfault 2',
       'Seg 3',
     ],
+    tabs: [],
   }
 
   constructor(props) {
@@ -94,9 +103,16 @@ export class SegmentedControl extends React.Component {
   }
 
   render() {
-    const { numSegments, options, disabled, label } = this.props;
+    const { options, disabled, label } = this.props;
     const { active } = this.state;
-
+    const tabs = this.props.tabs; // React.Children.toArray(this.props.tabs);
+    let activeSegmentName = null;
+    let activeTab = null;
+    if (!isNaN(active) && options.length && tabs && Object.keys(tabs).length) {
+      activeSegmentName = !isNaN(active) ? options[active] : '';
+      activeTab = Object.hasOwnProperty.call(tabs, activeSegmentName) ? tabs[activeSegmentName] : null;
+      console.log(activeSegmentName, activeTab);
+    }
     return (
       <Container>
         {label ? <Label>{label}</Label> : null}
@@ -104,6 +120,13 @@ export class SegmentedControl extends React.Component {
         <List>
           {options.map((segment, i) => <Segment key={i} active={active === i} disabled={disabled} onClick={this.chooseActive(i)}>{segment}</Segment>)}
         </List>
+        { activeTab
+          ? (
+            <Content>
+              <Tab>{activeTab}</Tab>
+            </Content>
+          ): null
+        }
       </Container>
     );
   }
