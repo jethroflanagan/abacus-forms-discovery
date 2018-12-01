@@ -10,6 +10,7 @@ import { Checkbox } from "../components/Checkbox";
 import { RadioButtonGroup } from "../components/RadioButtonGroup";
 import { SegmentedControl } from "../components/SegmentedControl";
 import { ProgressIndicator } from "../components/ProgressIndicator";
+import { VerticalStepIndicator } from "../components/VerticalStepIndicator";
 import { MinimalProgressIndicator } from "../components/MinimalProgressIndicator";
 import { GroupHeading } from "../components/GroupHeading";
 import { ThankYou } from './ThankYou';
@@ -173,6 +174,7 @@ export class NormalForm extends React.Component {
       'Progress indicator': { field: ProgressIndicator },
       'Minimal progress indicator': { field: MinimalProgressIndicator },
       'Step indicator': { field: ProgressIndicator },
+      // 'Vertical step indicator': { field: VerticalStepIndicator },
       'None': null,
     }[PROGRESS_TYPE];
     const progressBar = progressBarOptions
@@ -278,6 +280,7 @@ export class NormalForm extends React.Component {
     const formContent = isComplete ? <ThankYou reset={() => this.reset()}/> : fields;
     return (
       <FormContainer>
+        <VerticalStepIndicator value={this.state.page} />
         <Stack style={styles}>
           {formContent}
         </Stack>

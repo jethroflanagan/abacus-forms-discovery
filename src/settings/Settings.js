@@ -34,7 +34,7 @@ export const settings = {
     // layout
   FORM_WIDTH: { label: 'Form width', value: 580, type: 'number', min: 320, max: 1920, step: 1 },
   STRETCH_WIDTH: { label: 'Stretch to fill width', value: false },
-  SINGLE_PAGE: { label: 'Single page', value: true },
+  SINGLE_PAGE: { label: 'Single page', value: false },
   USE_GROUPS: { label: 'Group fields', value: true },
   MULTI_COLUMN: list({ label: 'Multiple columns', value: 0, options: ['Single', 'Z-pattern', 'Newspaper columns'] }),
   COLUMN_GAP: { label: 'Gap between columns', value: 10, type: 'number', min: 0, max: 50, step: 1 },
@@ -48,7 +48,7 @@ export const settings = {
 // progress
 
   PROGRESS_POSITION: list({ label: 'Progress position', value: 0, options: ['Above', 'In title', 'Bottom'] }),
-  PROGRESS_TYPE: list({ label: 'Progress type', value: 0, options: ['Progress indicator', 'Minimal progress indicator', 'Step indicator', 'Vertical step indicator', 'None'] }),
+  PROGRESS_TYPE: list({ label: 'Progress type', value: 3, options: ['Progress indicator', 'Minimal progress indicator', 'Step indicator', 'Vertical step indicator', 'None'] }),
   // PROGRESS_ORIENTATION: list({ label: 'Progress orientation', value: 0, options: ['Vertical', 'Horizontal', 'Mixed: main steps are horizontal', 'Mixed: main steps are vertical'] }),
   SEPARATE_PAGES_FOR_PROGRESS: list({ label: 'Progress bar sub items', value: 0, options: ['Anchors in page', 'Separate pages'] }), 
   
@@ -57,9 +57,9 @@ export const settings = {
   SHOW_SUMMARY: { label: 'Show summary page', value: true },
   TYPEFORM: { label: 'Typeform mode', value: false }, 
   HIDDEN_FIELDS: list({ label: 'Hidden fields', value: 0, options: ['None (show as disabled)', 'Allow'] }),
-  PROGRESSIVE_DISCLOSURE: list({ label: 'Progressive disclosure type', value: 1, options: ['Radio', 'Segmented Control', 'Tabbed Radio header jam'] }), 
+  PROGRESSIVE_DISCLOSURE: list({ label: 'Progressive disclosure type', value: 1, options: ['Radio', 'Segmented Control', 'Tabbed Radio header jam'] }),
   INLINE_HELP: list({ label: 'Inline help', value: 0, options: ['As helper text', 'As tooltip'] }),
-  UPSIDE_DOWN: { label: 'Demogorgon', value: false },
+  UPSIDE_DOWN: { label: 'Demogorgon lair', value: false },
 
 };
 

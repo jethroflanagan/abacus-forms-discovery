@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="11px" height="9px" viewBox="0 0 11 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
-    <title>Icon-tick</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="🔩-tickmark" fill="#555555" fill-rule="nonzero">
-            <path d="M1.53644256,4.0402667 L0,5.3206355 L2.5,8.3206355 C2.88592389,8.78374417 3.59081681,8.80265385 4.00101477,8.3609022 L10.5010148,1.3609022 L9.03542779,0 L3.30881844,6.16711776 L1.53644256,4.0402667 Z" id="Icon-tick"></path>
-        </g>
+    <g fill-rule="nonzero">
+        <path d="M1.53644256,4.0402667 L0,5.3206355 L2.5,8.3206355 C2.88592389,8.78374417 3.59081681,8.80265385 4.00101477,8.3609022 L10.5010148,1.3609022 L9.03542779,0 L3.30881844,6.16711776 L1.53644256,4.0402667 Z" id="Icon-tick"></path>
     </g>
 </svg>
