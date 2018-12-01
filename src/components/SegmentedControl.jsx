@@ -13,9 +13,6 @@ const Container = styled.div`
 const List = styled.div`
     display: flex;
     flex-direction: row;
-    border-radius: 5px;
-    overflow: hidden;
-    border: 1px solid #ccc;
     height: 40px;
     width: 100%;
     align-items: center;
@@ -31,6 +28,17 @@ const Segment = styled.div`
     white-space: nowrap;
     align-items: center;
     justify-content: center;
+    border: 1px solid ${p => p.active ? '#555': '#ccc'};
+    border-radius: 0;
+    &:first-child {
+      border-radius: 5px 0 0 5px;
+    }
+    &:last-child {
+      border-radius: 0 5px 5px 0;
+    }
+    &:not(:last-child) {
+      border-right: none;
+    }
     background: ${p => (
     p.active
       ? p.disabled ? '#ccc' : '#555'
@@ -41,9 +49,6 @@ const Segment = styled.div`
       ? '#fff'
       : p.disabled ? '#DDD' : '#555'
   )};
-    &:not(:last-child) {
-        border-right: 1px solid #ccc;
-    }
 `;
 const Label = styled.div`
     color: ${colors.TEXT_NORMAL};

@@ -50,6 +50,8 @@ const Input = styled.input`
     }
 `;
 const Placeholder = styled.div`
+    position: absolute;
+    pointer-events: none;
     color: ${colors.TEXT_PLACEHOLDER};
     font-size: 16px;
     font-style: italic;

@@ -3,16 +3,18 @@ import styled from 'styled-components';
 import * as colors from '../global/Colors';
 import { ReactComponent as Tick } from '../assets/icons/tick.svg';
 
+
 const Container = styled.div`
     display: flex;
     margin-right: 20px;
     margin-top: 15px;
+    padding-right: 20px;
     min-width: 160px;
     border-right: 1px solid #efefef;
 `;
 const Label = styled.div`
   font-size: 18px;
-  color: ${p => p.type !== 'current' ? colors.TEXT_DISABLED : colors.TEXT_NORMAL};
+  color: ${p => p.type === 'current' ? colors.FOCUS : colors.TEXT_NORMAL};
   margin-left: 10px;
 `;
 // const Track = styled.div`
@@ -25,13 +27,13 @@ const Step = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${p => p.type === 'upcoming' ? colors.TEXT_DISABLED : '#fff'};
+  color: ${p => p.type === 'upcoming' ? colors.TEXT_NORMAL : '#fff'};
   border-radius: 40px;
   width: 30px;
   height: 30px;
-  border: 1px solid ${p => p.type === 'upcoming' ? colors.TEXT_DISABLED : 'transparent'};
+  border: 1px solid ${p => p.type === 'upcoming' ? colors.TEXT_NORMAL : 'transparent'};
   background-color: ${p => p.type === 'complete'
-    ? colors.TEXT_DISABLED
+    ? colors.TEXT_NORMAL
     : p.type === 'current'
       ? colors.FOCUS
       : 'transparent'};
@@ -91,7 +93,6 @@ export class VerticalStepIndicator extends React.Component {
 
   render() {
     const { value, steps } = this.props;
-console.log(value, steps)
 
     return (
       <Container>
