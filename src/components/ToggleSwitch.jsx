@@ -43,7 +43,7 @@ const ToggleButton = styled.div`
 `;
 
 const Label = styled.div`
-  color: ${colors.TEXT_NORMAL};
+  color: ${p=> p.disabled ? colors.TEXT_DISABLED : colors.TEXT_NORMAL};
   margin-left: 9px;
   text-align: left;
 `;
@@ -99,7 +99,7 @@ export class ToggleSwitch extends React.Component {
         <ToggleTrack checked={checked} disabled={disabled}>
           <ToggleButton checked={checked} disabled={disabled} />
         </ToggleTrack>
-        <Label>{label}</Label>
+        <Label disabled={disabled}>{label}</Label>
       </Container>
     );
   }

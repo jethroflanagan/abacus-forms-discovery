@@ -99,8 +99,8 @@ export class TabbedRadioButtonGroup extends React.Component {
         <Enclosed>
           <List>
             { options.map(label =>
-              <Option active={value === label} hasContent={activeTab != null}>
-                <RadioButton label={label} checked={value === label} disabled={disabled} onClick={() => this.toggle(label)} key={label} />
+              <Option active={value === label} hasContent={activeTab != null} key={label}>
+                <RadioButton label={label} checked={value === label} disabled={disabled} onClick={() => this.toggle(label)} />
               </Option>
             )}
           </List>

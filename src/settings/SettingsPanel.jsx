@@ -141,7 +141,7 @@ export class SettingsPanel extends React.Component {
           label('Errors'),
           toggle('ERROR_BREATHING_ROOM'),
           toggle('ERRORS_EXPAND', { disabled: true }),
-          toggle('FORCE_ERRORS', { disabled: true }),
+          toggle('FORCE_ERRORS'),
           label('Flow'),
           toggle('SHOW_SUMMARY', { disabled: true }),
           toggle('TYPEFORM', { disabled: true }),

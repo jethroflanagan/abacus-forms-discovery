@@ -22,7 +22,7 @@ export const settings = {
   FORCE_ERRORS: { label: 'Show dummy errors', value: false },
 
   // progress
-  PROGRESS_TYPE: list({ label: 'Progress type', value: 3, options: ['Progress indicator', 'Minimal progress indicator', 'Step indicator', 'Vertical step indicator', 'None'] }),
+  PROGRESS_TYPE: list({ label: 'Progress type', value: 0, options: ['Progress indicator', 'Minimal progress indicator', 'Vertical step indicator', 'Step indicator', 'None'] }),
   // PROGRESS_POSITION: list({ label: 'Progress position', value: 0, options: ['Above', 'With title', 'Bottom', 'Side'] }),
   // PROGRESS_ORIENTATION: list({ label: 'Progress orientation', value: 0, options: ['Vertical', 'Horizontal', 'Mixed: main steps are horizontal', 'Mixed: main steps are vertical'] }),
   SEPARATE_PAGES_FOR_PROGRESS: list({ label: 'Progress bar sub items', value: 0, options: ['Anchors in page', 'Separate pages'] }),
@@ -31,7 +31,7 @@ export const settings = {
   SHOW_SUMMARY: { label: 'Show summary page', value: false },
   TYPEFORM: { label: 'Typeform mode', value: false },
   HIDDEN_FIELDS: list({ label: 'Hidden fields', value: 0, options: ['None (show as disabled)', 'Allow'] }),
-  PROGRESSIVE_DISCLOSURE: list({ label: 'Progressive disclosure', value: 2, options: ['Radio', 'Segmented control', 'Tabbed radio'] }),
+  PROGRESSIVE_DISCLOSURE: list({ label: 'Progressive disclosure', value: 1, options: ['Radio', 'Segmented control', 'Tabbed radio'] }),
   INLINE_HELP: list({ label: 'Inline help', value: 0, options: ['As helper text', 'As tooltip'] }),
   UPSIDE_DOWN: { label: 'Demogorgon lair', value: false },
 };

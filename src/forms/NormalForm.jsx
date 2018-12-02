@@ -62,7 +62,7 @@ export class NormalForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 1,
+      page: 0,
       language: "English (ZA)",
       isComplete: false,
       formValues: {},
@@ -112,9 +112,17 @@ export class NormalForm extends React.Component {
     const idPrefix = preferredOptions.idPrefix ? preferredOptions.idPrefix : '';
     const id = idPrefix + (preferredOptions.id || preferredOptions.label);
 
+    const { FORCE_ERRORS } = this.props;
+    let helperText = '';
+    let status = '';
+    if (FORCE_ERRORS && Math.random() > .5) {
+      helperText = ['Oh no!', 'Something went wrong', `You made a mistake there`][~~(Math.random() * 3)];
+      status = ['error', 'warning', `success`][~~(Math.random() * 3)];
+    }
+
     return (
       <FieldContainer {...options.container} key={id} >
-        <Field value={this.state.formValues[id]} {...options.field} onUpdateValue={(value) => this.onUpdateValue(id, value)} />
+        <Field value={this.state.formValues[id]} {...options.field} onUpdateValue={(value) => this.onUpdateValue(id, value)} helperText={helperText} status={status}/>
       </FieldContainer>
     );
   }
@@ -152,8 +160,10 @@ export class NormalForm extends React.Component {
   }
 
   resolveProgressBar({ pageSteps, position }) {
-    const { PROGRESS_TYPE, PROGRESS_POSITION } = this.props;
+    const { PROGRESS_TYPE, SINGLE_PAGE, PROGRESS_POSITION } = this.props;
     const { page } = this.state;
+    if (SINGLE_PAGE) return null;
+
     if (PROGRESS_TYPE === 'Vertical step indicator' && position !== 'Side') {
       return null;
     }
