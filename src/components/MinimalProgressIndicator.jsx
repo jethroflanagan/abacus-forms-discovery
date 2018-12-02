@@ -21,15 +21,15 @@ const Slider = styled.div`
 export class MinimalProgressIndicator extends React.Component {
   // Set default properties
   static defaultProps = {
-    step: 1,
+    currentStep: 1,
     totalSteps: 3,
   }
 
   render() {
-    const { step, totalSteps } = this.props;
+    const { currentStep, totalSteps } = this.props;
     return (
       <Track>
-        <Slider style={{width: (step / totalSteps) * 100 + '%'}}/>
+        <Slider style={{width: (currentStep / totalSteps) * 100 + '%'}}/>
       </Track>
     );
   }

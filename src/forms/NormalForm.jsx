@@ -27,7 +27,7 @@ const FormContainer = styled.div`
 `;
 
 const FieldContainer = styled.div`
-  width: 100%;
+  width: ${ p => p.noStretch ? 'auto': '100%' };
   margin-bottom: ${ p => p.FIELD_GAP || 0 }px;
   &:last-child {
     margin-bottom: 0;
@@ -88,26 +88,33 @@ export class NormalForm extends React.Component {
       ERROR_BREATHING_ROOM,
       FIELD_GAP,
     } = this.props;
+
+    const override = preferred.override || { container: {}, field: {} };
+
     return {
       field: {
         ...preferred,
         width: STRETCH_WIDTH ? '100%': preferred.width,
         alwaysShowHelperText: ERROR_BREATHING_ROOM,
+        ...override.field,
       },
       container: {
         FIELD_GAP,
+        ...override.container,
       }
     };
   }
-  
+
   createField(preferredOptions) {
     const options = this.getOptions(preferredOptions);
     const Field = preferredOptions.field;
     const idPrefix = preferredOptions.idPrefix ? preferredOptions.idPrefix : '';
     const id = idPrefix + (preferredOptions.id || preferredOptions.label);
+
+    console.log('create', options);
     return (
       <FieldContainer {...options.container} key={id} >
-        <Field {...options.field} onUpdateValue={(value) => this.onUpdateValue(id, value)} value={this.state.formValues[id]} />
+        <Field value={this.state.formValues[id]} {...options.field} onUpdateValue={(value) => this.onUpdateValue(id, value)} />
       </FieldContainer>
     );
   }
@@ -144,6 +151,39 @@ export class NormalForm extends React.Component {
     this.setState({ isComplete: true });
   }
 
+  resolveProgressBar({ pageSteps, position }) {
+    const { PROGRESS_TYPE, PROGRESS_POSITION } = this.props;
+    const { page } = this.state;
+    if (PROGRESS_TYPE === 'Vertical step indicator' && position !== 'Side') {
+      return null;
+    }
+    if (PROGRESS_TYPE === 'Progress indicator' && position !== 'Above') {
+      return null;
+    }
+    if (PROGRESS_TYPE === 'Minimal progress indicator' && position !== 'Above') {
+      return null;
+    }
+
+    const currentStep = page + 1;
+    const totalSteps = pageSteps.length;
+
+    const progressBarOptions = {
+      'Progress indicator': { field: ProgressIndicator, currentStep, totalSteps },
+      'Minimal progress indicator': { field: MinimalProgressIndicator, currentStep, totalSteps },
+      'Step indicator': null, // { field: ProgressIndicator },
+      'Vertical step indicator': { field: VerticalStepIndicator, currentStep, steps: pageSteps, override: { container: { noStretch: true } } },
+      'None': null,
+    }[PROGRESS_TYPE];
+
+    console.log(progressBarOptions);
+
+    const progressBar = progressBarOptions
+      ? this.createField(progressBarOptions)
+      : null;
+
+    return progressBar;
+  }
+
   // TODO: pass in as ...{ fields, buttonRow }
   resolvePaging(...pages) {
     const { SINGLE_PAGE } = this.props;
@@ -169,19 +209,10 @@ export class NormalForm extends React.Component {
       buttons.push(submitButton);
     }
 
-    const { PROGRESS_TYPE } = this.props;
-    const progressBarOptions = {
-      'Progress indicator': { field: ProgressIndicator },
-      'Minimal progress indicator': { field: MinimalProgressIndicator },
-      'Step indicator': { field: ProgressIndicator },
-      // 'Vertical step indicator': { field: VerticalStepIndicator },
-      'None': null,
-    }[PROGRESS_TYPE];
-    const progressBar = progressBarOptions
-      ? this.createField({ ...progressBarOptions, step: page + 1, totalSteps: pages.length })
-      : null;
+    // const progressBar = this.resolveProgressBar();
+
     return [
-      progressBar,
+      // progressBar,
       ...fields,
       this.createButtonRow(...buttons)
     ];
@@ -277,11 +308,32 @@ export class NormalForm extends React.Component {
       ]),
     ];
 
-    const formContent = isComplete ? <ThankYou reset={() => this.reset()}/> : fields;
+    const pageSteps = [
+      {
+        label: 'Payment details',
+      },
+      {
+        label: 'Payment notice',
+      },
+    ];
+
+    let progressSide = null;
+    let progressAbove = null;
+    let formContent = null;
+    if (isComplete) {
+      formContent = <ThankYou reset={() => this.reset()}/>
+    }
+    else {
+      formContent = fields;
+      progressSide = this.resolveProgressBar({ pageSteps, position: 'Side' });
+      progressAbove = this.resolveProgressBar({ pageSteps, position: 'Above' });
+    }
+
     return (
       <FormContainer>
-        <VerticalStepIndicator value={this.state.page} />
+        {progressSide}
         <Stack style={styles}>
+          {progressAbove}
           {formContent}
         </Stack>
       </FormContainer>

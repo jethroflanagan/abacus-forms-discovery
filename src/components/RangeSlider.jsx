@@ -121,7 +121,7 @@ export class RangeSlider extends React.Component {
         const { disabled, label, step, min, max } = this.props;
         const { checked, value } = this.state;
         return (
-            <Container {...this.props}>
+            <Container>
                 <Label>{label}</Label>
                 <Box disabled={disabled}>
                     <NumberInput

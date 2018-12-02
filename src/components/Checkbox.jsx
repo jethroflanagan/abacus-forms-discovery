@@ -55,6 +55,7 @@ export class Checkbox extends React.Component {
         helperText: '',
         status: '',
         alwaysShowHelperText: false,
+        onUpdateValue: () => {},
     }
 
     constructor(props) {
@@ -73,9 +74,11 @@ export class Checkbox extends React.Component {
     }
 
     toggle() {
+      const checked = !this.state.checked;
       this.setState({
-        checked: !this.state.checked,
+        checked,
       });
+      // this.props.onUpdateValue({ checked });
     }
 
     render() {
@@ -87,7 +90,7 @@ export class Checkbox extends React.Component {
         }
         return (
           <Container>
-            <Field {...this.props} onClick={() => this.toggle()}>
+            <Field onClick={() => this.toggle()}>
                 <Radio checked={checked} disabled={disabled}>
                   <RadioSignal checked={checked} disabled={disabled} >
                     <Tick />

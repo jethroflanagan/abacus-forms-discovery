@@ -5,12 +5,12 @@ import { ReactComponent as Tick } from '../assets/icons/tick.svg';
 
 
 const Container = styled.div`
-    display: flex;
-    margin-right: 20px;
-    margin-top: 15px;
-    padding-right: 20px;
-    min-width: 160px;
-    border-right: 1px solid #efefef;
+  display: flex;
+  margin-right: 20px;
+  margin-top: 15px;
+  padding-right: 20px;
+  min-width: 160px;
+  border-right: 1px solid #efefef;
 `;
 const Label = styled.div`
   font-size: 18px;
@@ -64,42 +64,40 @@ const StepTrack = styled.div`
 export class VerticalStepIndicator extends React.Component {
   // Set default properties
   static defaultProps = {
-    value: 1,
+    currentStep: 1,
     steps: [
-      { label: 'Payment'},
-      { label: 'Notice' },
-      { label: 'Ok' },
-      { label: 'Ok' },
-      { label: 'Ok' },
-      { label: 'Yes' },
+      { label: 'First' },
+      { label: 'Second' },
+      { label: 'Third' },
     ],
   }
 
-  createStep({ step, index, currentStep }) {
+  createStep({ stepInfo, index, currentStep }) {
     const type = index < currentStep
       ? 'complete'
       : index === currentStep
         ? 'current'
         : 'upcoming';
     return (
-      <StepContainer>
+      <StepContainer key={index}>
         <Step type={type}>
           { type === 'complete' ? <Tick style={{fill: '#fff'}} /> : index + 1 }
         </Step>
-        <Label type={type}>{step.label}</Label>
+        <Label type={type}>{stepInfo.label}</Label>
       </StepContainer>
     );
   }
 
   render() {
-    const { value, steps } = this.props;
+    // current step is adjsut by -1 for ease of calcs in `createStep`
+    const { currentStep, steps } = this.props;
 
     return (
       <Container>
         {/* <Track>
         </Track> */}
         <StepTrack>
-          {steps.map((step, index) => this.createStep({ index, step, currentStep: value }))}
+          {steps.map((stepInfo, index) => this.createStep({ index, stepInfo, currentStep: currentStep - 1 }))}
         </StepTrack>
       </Container>
     );

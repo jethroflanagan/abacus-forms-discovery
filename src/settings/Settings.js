@@ -1,37 +1,12 @@
 // import produce from "immer";
 import * as _ from 'lodash';
-// layout
-// export const STRETCH_WIDTH = 'STRETCH_WIDTH';
-// export const SINGLE_PAGE = 'SINGLE_PAGE';
-// export const USE_GROUPS = 'USE_GROUPS';
-// export const MULTI_COLUMN = 'MULTI_COLUMN';
-// export const FIELD_GAP = 'FIELD_GAP';
-// export const GROUP_GAP = 'GROUP_GAP';
-
-// // errors
-// export const ERRORS_EXPAND = 'ERRORS_EXPAND';
-// export const ERROR_BREATHING_ROOM = 'ERROR_BREATHING_ROOM';
-// export const FORCE_ERRORS = 'FORCE_ERRORS';
-
-// // progress
-// export const PROGRESS_POSITION = 'PROGRESS_POSITION';
-// export const PROGRESS_TYPE = 'PROGRESS_TYPE';
-// export const PROGRESS_ORIENTATION = 'PROGRESS_ORIENTATION';
-// export const SEPARATE_PAGES_FOR_PROGRESS = 'SEPARATE_PAGES_FOR_PROGRESS';
-
-// // flow
-// export const SHOW_SUMMARY = 'SHOW_SUMMARY';
-// export const TYPEFORM = 'TYPEFORM';
-// export const HIDDEN_FIELDS = 'HIDDEN_FIELDS';
-// export const PROGRESSIVE_DISCLOSURE = 'PROGRESSIVE_DISCLOSURE';
-// export const INLINE_HELP = 'INLINE_HELP';
 
 const list = (config) => ({ ...config, value: config.options[config.value] });
 
 export const settings = {
   FORM: list({ label: '', value: 0, options: ['Connected Banking', 'DSP'] }),
 
-    // layout
+  // layout
   FORM_WIDTH: { label: 'Form width', value: 580, type: 'number', min: 320, max: 1920, step: 1 },
   STRETCH_WIDTH: { label: 'Stretch to fill width', value: false },
   SINGLE_PAGE: { label: 'Single page', value: false },
@@ -41,26 +16,24 @@ export const settings = {
   FIELD_GAP: { label: 'Gap between fields', value: 10, type: 'number', min: 0, max: 50, step: 1 },
   GROUP_GAP: { label: 'Gap between groups', value: 20, type: 'number', min: 0, max: 50, step: 1 },
 
-    // errors
-  ERRORS_EXPAND: { label: 'Errors tap to expand', value: true },
+  // errors
+  ERRORS_EXPAND: { label: 'Errors tap to expand', value: false },
   ERROR_BREATHING_ROOM: { label: 'Errors have breathing room', value: true },
   FORCE_ERRORS: { label: 'Show dummy errors', value: false },
-// progress
 
-  PROGRESS_POSITION: list({ label: 'Progress position', value: 0, options: ['Above', 'In title', 'Bottom'] }),
+  // progress
   PROGRESS_TYPE: list({ label: 'Progress type', value: 3, options: ['Progress indicator', 'Minimal progress indicator', 'Step indicator', 'Vertical step indicator', 'None'] }),
+  // PROGRESS_POSITION: list({ label: 'Progress position', value: 0, options: ['Above', 'With title', 'Bottom', 'Side'] }),
   // PROGRESS_ORIENTATION: list({ label: 'Progress orientation', value: 0, options: ['Vertical', 'Horizontal', 'Mixed: main steps are horizontal', 'Mixed: main steps are vertical'] }),
-  SEPARATE_PAGES_FOR_PROGRESS: list({ label: 'Progress bar sub items', value: 0, options: ['Anchors in page', 'Separate pages'] }), 
-  
-    // flow
+  SEPARATE_PAGES_FOR_PROGRESS: list({ label: 'Progress bar sub items', value: 0, options: ['Anchors in page', 'Separate pages'] }),
 
-  SHOW_SUMMARY: { label: 'Show summary page', value: true },
-  TYPEFORM: { label: 'Typeform mode', value: false }, 
+  // flow
+  SHOW_SUMMARY: { label: 'Show summary page', value: false },
+  TYPEFORM: { label: 'Typeform mode', value: false },
   HIDDEN_FIELDS: list({ label: 'Hidden fields', value: 0, options: ['None (show as disabled)', 'Allow'] }),
-  PROGRESSIVE_DISCLOSURE: list({ label: 'Progressive disclosure type', value: 1, options: ['Radio', 'Segmented Control', 'Tabbed Radio header jam'] }),
+  PROGRESSIVE_DISCLOSURE: list({ label: 'Progressive disclosure', value: 1, options: ['Radio', 'Segmented Control', 'Tabbed Radio header jam'] }),
   INLINE_HELP: list({ label: 'Inline help', value: 0, options: ['As helper text', 'As tooltip'] }),
   UPSIDE_DOWN: { label: 'Demogorgon lair', value: false },
-
 };
 
 // Add 'key' name to settings for reference

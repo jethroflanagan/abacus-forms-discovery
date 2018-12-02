@@ -35,17 +35,17 @@ const Slider = styled.div`
 export class ProgressIndicator extends React.Component {
   // Set default properties
   static defaultProps = {
-    step: 1,
+    currentStep: 1,
     totalSteps: 3,
   }
 
   render() {
-    const { label, step, totalSteps } = this.props;
+    const { label, currentStep, totalSteps } = this.props;
     return (
       <Container>
-        <Label>Step {step} of {totalSteps}</Label>
+        <Label>Step {currentStep} of {totalSteps}</Label>
         <Track>
-          <Slider style={{width: (step / totalSteps) * 100 + '%'}}/>
+          <Slider style={{width: (currentStep / totalSteps) * 100 + '%'}}/>
         </Track>
       </Container>
     );
