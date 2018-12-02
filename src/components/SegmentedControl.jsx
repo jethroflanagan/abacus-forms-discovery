@@ -109,6 +109,8 @@ export class SegmentedControl extends React.PureComponent {
   render() {
     const { options, disabled, label } = this.props;
     const { active } = this.state;
+
+    // TABS
     const tabs = this.props.tabs; // React.Children.toArray(this.props.tabs);
     let activeSegmentName = null;
     let activeTab = null;
@@ -116,6 +118,8 @@ export class SegmentedControl extends React.PureComponent {
       activeSegmentName = !isNaN(active) ? options[active] : '';
       activeTab = Object.hasOwnProperty.call(tabs, activeSegmentName) ? tabs[activeSegmentName] : null;
     }
+    // END TABS
+
     return (
       <Container>
         {label ? <Label>{label}</Label> : null}

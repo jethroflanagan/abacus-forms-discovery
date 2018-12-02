@@ -31,7 +31,7 @@ export const settings = {
   SHOW_SUMMARY: { label: 'Show summary page', value: false },
   TYPEFORM: { label: 'Typeform mode', value: false },
   HIDDEN_FIELDS: list({ label: 'Hidden fields', value: 0, options: ['None (show as disabled)', 'Allow'] }),
-  PROGRESSIVE_DISCLOSURE: list({ label: 'Progressive disclosure', value: 1, options: ['Radio', 'Segmented Control', 'Tabbed Radio header jam'] }),
+  PROGRESSIVE_DISCLOSURE: list({ label: 'Progressive disclosure', value: 2, options: ['Radio', 'Segmented control', 'Tabbed radio'] }),
   INLINE_HELP: list({ label: 'Inline help', value: 0, options: ['As helper text', 'As tooltip'] }),
   UPSIDE_DOWN: { label: 'Demogorgon lair', value: false },
 };

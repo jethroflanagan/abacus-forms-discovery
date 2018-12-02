@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import * as colors from '../global/Colors';
 import { RadioButton } from './RadioButton';
 
+const BORDER_COLOR = colors.TEXT_DISABLED;
+const ACTIVE_BACKGROUND = '#efefef';
 const Container = styled.div`
     display: flex;
     align-items: flex-start;
@@ -13,30 +15,41 @@ const List = styled.div`
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
-    & > * {
-      /* margin-right: 30px; */
-      margin-bottom: 5px;
-      &:last-child {
-        /* margin-right: 0; */
-        margin-bottom: 0;
-      }
-    }
 `;
+
+const Option = styled.div`
+  padding: 10px 20px;
+  background-color: ${p => p.active ? ACTIVE_BACKGROUND : '#fff'};
+  border-bottom: 1px solid ${p => p.active || !p.hasContent ? 'transparent' : BORDER_COLOR};
+  flex-grow: 1;
+  &:not(:last-child) {
+    border-right: 1px solid ${BORDER_COLOR};
+    /* margin-right: 15px; */
+  }
+`;
+
 const Label = styled.div`
     color: ${p => p.disabled ? colors.TEXT_DISABLED : colors.TEXT_NORMAL};
     margin-bottom: 5px;
     font-weight: 600;
 `;
 
+const Enclosed = styled.div`
+  border: 1px solid ${BORDER_COLOR};
+  border-radius: 4px;
+  background-color: ${ACTIVE_BACKGROUND};
+`;
 const Content = styled.div`
   margin-top: 10px;
+  padding: 20px;
+  padding-bottom: 0;
 `;
 
 const Tab = styled.div`
 `;
-export class RadioButtonGroup extends React.Component {
+export class TabbedRadioButtonGroup extends React.Component {
   static defaultProps = {
     disabled: false,
     value: '',
@@ -69,7 +82,7 @@ export class RadioButtonGroup extends React.Component {
   }
 
   render() {
-    const { disabled, label, options } = this.props;
+    const { disabled, label, options, width } = this.props;
     const { value } = this.state;
 
     // TABS
@@ -80,20 +93,25 @@ export class RadioButtonGroup extends React.Component {
       activeTab = Object.hasOwnProperty.call(tabs, activeSegmentName) ? tabs[activeSegmentName] : null;
     }
     // END TABS
-
     return (
       <Container>
         { label ? <Label disabled={disabled}>{label}</Label> : null }
-        <List>
-          { options.map(label => <RadioButton label={label} checked={value === label} disabled={disabled} onClick={() => this.toggle(label)} key={label} />)}
-        </List>
-        { activeTab
-          ? (
-            <Content>
-              <Tab>{activeTab}</Tab>
-            </Content>
-          ): null
-        }
+        <Enclosed>
+          <List>
+            { options.map(label =>
+              <Option active={value === label} hasContent={activeTab != null}>
+                <RadioButton label={label} checked={value === label} disabled={disabled} onClick={() => this.toggle(label)} key={label} />
+              </Option>
+            )}
+          </List>
+          { activeTab
+            ? (
+              <Content>
+                <Tab>{activeTab}</Tab>
+              </Content>
+            ): null
+          }
+        </Enclosed>
       </Container>
     );
   }

@@ -8,6 +8,7 @@ import { Dropdown } from "../components/Dropdown";
 import { ToggleSwitch } from "../components/ToggleSwitch";
 import { Checkbox } from "../components/Checkbox";
 import { RadioButtonGroup } from "../components/RadioButtonGroup";
+import { TabbedRadioButtonGroup } from "../components/TabbedRadioButtonGroup";
 import { SegmentedControl } from "../components/SegmentedControl";
 import { ProgressIndicator } from "../components/ProgressIndicator";
 import { VerticalStepIndicator } from "../components/VerticalStepIndicator";
@@ -61,7 +62,7 @@ export class NormalForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: 0,
+      page: 1,
       language: "English (ZA)",
       isComplete: false,
       formValues: {},
@@ -111,7 +112,6 @@ export class NormalForm extends React.Component {
     const idPrefix = preferredOptions.idPrefix ? preferredOptions.idPrefix : '';
     const id = idPrefix + (preferredOptions.id || preferredOptions.label);
 
-    console.log('create', options);
     return (
       <FieldContainer {...options.container} key={id} >
         <Field value={this.state.formValues[id]} {...options.field} onUpdateValue={(value) => this.onUpdateValue(id, value)} />
@@ -175,8 +175,6 @@ export class NormalForm extends React.Component {
       'None': null,
     }[PROGRESS_TYPE];
 
-    console.log(progressBarOptions);
-
     const progressBar = progressBarOptions
       ? this.createField(progressBarOptions)
       : null;
@@ -228,9 +226,11 @@ export class NormalForm extends React.Component {
 
   resolveProgressiveDisclosure(preferredOptions) {
     const { PROGRESSIVE_DISCLOSURE } = this.props;
+    const { value } = preferredOptions;
     const field = {
-      Radio: { ...preferredOptions, field: RadioButtonGroup },
-      'Segmented Control': { ...preferredOptions, field: SegmentedControl },
+      Radio: { ...preferredOptions, value: preferredOptions.options[value], field: RadioButtonGroup },
+      'Tabbed radio': { ...preferredOptions, value: preferredOptions.options[value], field: TabbedRadioButtonGroup },
+      'Segmented control': { ...preferredOptions, active: value, field: SegmentedControl },
     }[PROGRESSIVE_DISCLOSURE];
     return field;
   }
@@ -299,10 +299,10 @@ export class NormalForm extends React.Component {
           asField({ field: InputField, label: 'My reference', width: '240px' }),
           asField({ field: InputField, label: 'Beneficiary reference', width: '240px' }),
           asField(
-            asDisclosure({ field: RadioButtonGroup, label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], active: 0, tabs: createSendNotice('send me') })
+            asDisclosure({ label: 'Send me a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: 0, tabs: createSendNotice('send me') })
           ),
           asField(
-            asDisclosure({ field: SegmentedControl, label: 'Send beneficiary a notice of payment by', options: ["None", "SMS", "Email", "Fax"], active: 0, tabs: createSendNotice('send beneficiary') })
+            asDisclosure({ label: 'Send beneficiary a notice of payment by', options: ["None", "SMS", "Email", "Fax"], value: 0, tabs: createSendNotice('send beneficiary') })
           ),
         ),
       ]),

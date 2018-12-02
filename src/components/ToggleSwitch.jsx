@@ -55,7 +55,8 @@ export class ToggleSwitch extends React.Component {
     disabled: false,
     checked: false,
     height: 23,
-    width: 200
+    width: 200,
+    onUpdateValue: () => {},
   };
 
   constructor(props) {
@@ -75,13 +76,12 @@ export class ToggleSwitch extends React.Component {
   }
 
   toggle() {
+    if (this.props.disabled) return;
     const checked = !this.state.checked;
     this.setState({
       checked
     });
-    if (this.props.onUpdateValue) {
-      this.props.onUpdateValue(checked);
-    }
+    this.props.onUpdateValue(checked);
   }
 
   onHover() {
