@@ -63,7 +63,6 @@ export class SettingsPanel extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             ...props.settings,
         };
@@ -78,7 +77,7 @@ export class SettingsPanel extends React.Component {
         //   [name]: value,
         // }
         // this.props.onUpdateValue(name, value)
-        console.log('value', name, value);
+        // console.log('value', name, value);
         this.props.updateSetting(name, value);
     }
 
@@ -123,7 +122,7 @@ export class SettingsPanel extends React.Component {
         const disableForSingleColumn = MULTI_COLUMN === 'Single' ? { disabled: true } : null;
         const options = [
           label('Form'),
-          dropdown('FORM'),
+          dropdown('FORM', { disabled: true }),
           label('Layout'),
           number('FORM_WIDTH'),
           toggle('STRETCH_WIDTH'),
